@@ -21,11 +21,20 @@ class Staffs(models.Model):
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
     
+class Department(models.Model):
+    id=models.AutoField(primary_key=True)
+    department_name=models.CharField(max_length=255)
+    staff_id=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
+    objects=models.Manager()   
+    
 class Courses(models.Model):
     id=models.AutoField(primary_key=True)
     course_name=models.CharField(max_length=255)
     course_code=models.CharField(max_length=255)
+    department_id=models.ForeignKey(Department,on_delete=models.CASCADE,default=1)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()    
+    objects=models.Manager() 
 
