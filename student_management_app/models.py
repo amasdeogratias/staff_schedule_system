@@ -24,7 +24,7 @@ class Staffs(models.Model):
 class Department(models.Model):
     id=models.AutoField(primary_key=True)
     department_name=models.CharField(max_length=255)
-    staff_id=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    staff_id=models.ForeignKey(Staffs,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()   
