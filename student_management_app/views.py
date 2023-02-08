@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render
 from .EmailBackEnd import EmailBackEnd
+from django.contrib import messages
 
 
 # Create your views here.
@@ -23,7 +24,8 @@ def dbLogin(request):
             login(request,user)
             return HttpResponse("Email :"+request.POST.get('email')+" Password: "+request.POST.get('password'))
         else:
-            return HttpResponse('Invalid Login')
+            messages.error(request,'Invalid email or password')
+            return HttpResponseRedirect("login")
             
 def getUserDetails(request):
     if request.user != None:

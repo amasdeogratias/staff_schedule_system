@@ -27,6 +27,15 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
+      {% if messages %}
+      <div class="col-12">
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif%}
 
       <form action="{% url 'dblogin' %}" method="post">
         {% csrf_token %}
