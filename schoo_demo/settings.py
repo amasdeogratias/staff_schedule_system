@@ -135,6 +135,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 AUTH_USER_MODEL = "student_management_app.CustomUser"
+AUTHENTICATION_BACKENDS = ['student_management_app.EmailBackEnd.EmailBackend']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
