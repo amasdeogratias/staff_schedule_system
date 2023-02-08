@@ -26,6 +26,10 @@ def dbLogin(request):
             
 def getUserDetails(request):
     if request.user != None:
-        return HttpResponse('User: '+request.user.email +"usertype: "+request.user.user_type)
+        return HttpResponse("User : "+request.user.email+" usertype : "+str(request.user.user_type))
     else:
         return HttpResponse('Please login first')
+        
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/')
