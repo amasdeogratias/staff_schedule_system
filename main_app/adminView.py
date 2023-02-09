@@ -36,3 +36,6 @@ def add_staff_save(request):
             messages.error(request, "Problem in Staff creation...")
             return HttpResponseRedirect(reverse("add_staff"))
             
+def add_department(request):
+    return render(request, 'main_app/admin/add_department.html')
+            
