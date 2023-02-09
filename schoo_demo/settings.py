@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'student_management_app',
+    'main_app',
 ]
 
 MIDDLEWARE = [
@@ -134,8 +134,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-AUTH_USER_MODEL = "student_management_app.CustomUser"
-AUTHENTICATION_BACKENDS=['student_management_app.EmailBackEnd.EmailBackEnd']
+AUTH_USER_MODEL = "main_app.CustomUser"
+AUTHENTICATION_BACKENDS=['main_app.EmailBackEnd.EmailBackEnd']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

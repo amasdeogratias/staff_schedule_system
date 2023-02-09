@@ -7,13 +7,13 @@ from django.contrib import messages
 
 # Create your views here.
 def showDemoPage(request):
-    return render(request, 'student_management_app/demo.html')
+    return render(request, 'main_app/demo.html')
  
 def home(request):
-    return render(request, 'student_management_app/welcome.html')   
+    return render(request, 'main_app/welcome.html')   
     
 def showLoginPage(request):
-    return render(request, 'student_management_app/login.html')
+    return render(request, 'main_app/login.html')
     
 def dbLogin(request):
     if request.method != 'POST':
@@ -22,7 +22,8 @@ def dbLogin(request):
         user=EmailBackEnd.authenticate(request,username=request.POST.get("email"),password=request.POST.get("password"))
         if user != None:
             login(request,user)
-            return HttpResponseRedirect('admin_home')
+            # return HttpResponse("Email :"+request.POST.get('email')+" Password: "+request.POST.get('password'))
+            return HttpResponseRedirect('/admin_home')
         else:
             messages.error(request,'Invalid email or password')
             return HttpResponseRedirect("login")
