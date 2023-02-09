@@ -9,5 +9,5 @@ urlpatterns = [
     path('dblogin', views.dbLogin, name='dblogin'),
     path('user_details', views.getUserDetails),
     path('logout_user', views.logout_user, name='logout'),
-    path('admin_dashboard', adminView.admin_home, name='admin_home')
+    path('admin_dashboard', adminView.admin_home, name='admin_dashboard')
 ]

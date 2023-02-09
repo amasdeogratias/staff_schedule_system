@@ -23,7 +23,7 @@ def dbLogin(request):
         if user != None:
             login(request,user)
             # return HttpResponse("Email :"+request.POST.get('email')+" Password: "+request.POST.get('password'))
-            return HttpResponseRedirect('/admin_home')
+            return HttpResponseRedirect('/admin_dashboard')
         else:
             messages.error(request,'Invalid email or password')
             return HttpResponseRedirect("login")
