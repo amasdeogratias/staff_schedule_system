@@ -62,26 +62,29 @@
     </form>
 
     <!-- Right navbar links -->
-    {% include 'admin/notification.html' %}
+    {% include "main_app/admin/notification.html" %}
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  {% include 'admin/sidebar.html' %}
+  {% include 'main_app/admin/sidebar.html' %}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    {% include 'admin/header.html %}
+    {% include 'main_app/admin/header.html' %}
     <!-- /.content-header -->
 
     <!-- Main content -->
-    {% block main_content %} 
-    {% endblock main_content %}
+
+      {% block content %} 
+      {% endblock content %}
+
+    
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  {% include 'footer.html' %}
+  {% include 'main_app/admin/footer.html' %}
 
 </div>
 <!-- ./wrapper -->
