@@ -14,5 +14,5 @@ urlpatterns = [
     path('add_staff_save', adminView.add_staff_save),
     path('add_department', adminView.add_department, name='add_department'),
     path('add_department_save', adminView.add_department_save),
-    path('view_departments', adminView.all_departments)
+    path('view_departments', adminView.all_departments),
 ]
