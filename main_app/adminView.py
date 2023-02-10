@@ -38,4 +38,18 @@ def add_staff_save(request):
             
 def add_department(request):
     return render(request, 'main_app/admin/add_department.html')
+    
+def add_department_save(request):
+    if request.method != 'POST':
+        return HttpResponse('Method not allowed')
+    else:
+        department_name = request.POST.get('department_name')
+        try:
+            department = Department.objects.create(department_name=department_name)
+            department.save()
+            messages.success(request, 'Department added successfully')
+            return HttpResponseRedirect(reverse('add_department'))
+        except:
+            messages.error(request,'Problem in department creation')
+            return HttpResponseRedirect(reverse('add_department'))
             
