@@ -53,3 +53,7 @@ def add_department_save(request):
             messages.error(request,'Problem in department creation')
             return HttpResponseRedirect(reverse('add_department'))
             
+def all_departments(request):
+    departments = Department.objects.all()
+    return render(request, 'main_app/admin/view_department.html',{'departments':departments})
+            
