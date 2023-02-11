@@ -64,4 +64,23 @@ def all_departments(request):
 def add_course(request):
     departments = Department.objects.all()
     return render(request, 'main_app/admin/add_course.html', {'departments':departments})
+    
+def add_course_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method not allowed</h2>")
+    else:
+        course_name = request.POST.get('course_name')
+        course_code = request.POST.get('course_code')
+        department_id = request.POST.get('department')
+        department_obj = Department.objects.get(id=department_id)
+        
+        try:
+            course = Courses.objects.create(course_name=course_name,course_code=course_code,department=department_obj)
+            course.save()
+            messages.success(request,'Course added successfully')
+            return HttpResponseRedirect(reverse('add_course'))
+            
+        except:
+            messages.error(request, 'Problem in course creation')
+            return HttpResponseRedirect(reverse('add_course'))
             
