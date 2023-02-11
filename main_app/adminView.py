@@ -15,7 +15,7 @@ def add_staff(request):
     
 def add_staff_save(request):
     if request.method != 'POST':
-        return HttpResponse('Method not allowed')
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else: # process the form
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -23,18 +23,21 @@ def add_staff_save(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
+        department_id = request.POST.get('department')  
         
         #create custom user object
         try:
             user = CustomUser.objects.create_user(
                username=username,email=email,password=password,first_name=first_name,last_name=last_name, user_type=2)
             user.staffs.address=address
+            depart_obj = Department.objects.get(id=department_id)
+            user.staffs.department = depart_obj
             user.save()
             messages.success(request, "Staff added successfully...")
             return HttpResponseRedirect(reverse("add_staff"))
             
         except:
-            messages.error(request, "Problem in Staff creation...")
+            messages.error(request)
             return HttpResponseRedirect(reverse("add_staff"))
             
 def add_department(request):
@@ -42,7 +45,7 @@ def add_department(request):
     
 def add_department_save(request):
     if request.method != 'POST':
-        return HttpResponse('Method not allowed')
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         department_name = request.POST.get('department_name')
         try:
