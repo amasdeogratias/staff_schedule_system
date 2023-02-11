@@ -84,3 +84,9 @@ def add_course_save(request):
             messages.error(request, 'Problem in course creation')
             return HttpResponseRedirect(reverse('add_course'))
             
+def add_student(request):
+    return render(request, 'main_app/admin/add_student.html')
+    
+def add_student_save(request):
+    return render(request, 'main_app/admin/add_student.html')
+            
