@@ -60,4 +60,8 @@ def add_department_save(request):
 def all_departments(request):
     departments = Department.objects.all()
     return render(request, 'main_app/admin/view_department.html',{'departments':departments})
+    
+def add_course(request):
+    departments = Department.objects.all()
+    return render(request, 'main_app/admin/add_course.html', {'departments':departments})
             
