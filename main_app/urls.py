@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
-from . import adminView
+from . import views,adminView, staffView, studentView
+
 
 #
 urlpatterns = [
     path('', views.home),
-    path('login', views.showLoginPage),
+    path('login', views.showLoginPage, name='login'),
     path('dblogin', views.dbLogin, name='dblogin'),
     path('user_details', views.getUserDetails),
     path('logout_user', views.logout_user, name='logout'),
@@ -18,4 +18,6 @@ urlpatterns = [
     path('add_course', adminView.add_course, name='add_course'),
     path('add_student', adminView.add_student, name='add_student'),
     path('add_student_save', adminView.add_student_save),
+    path('staff_panel', staffView.staff_panel, name='staff_panel'),
+     path('student_panel', studentView.student_panel, name='student_panel')
 ]
