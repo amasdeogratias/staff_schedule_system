@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render
 from .EmailBackEnd import EmailBackEnd
 from django.contrib import messages
+from django.urls import reverse
 
 
 # Create your views here.
@@ -22,8 +23,14 @@ def dbLogin(request):
         user=EmailBackEnd.authenticate(request,username=request.POST.get("email"),password=request.POST.get("password"))
         if user != None:
             login(request,user)
+            if user.user_type == "1":
+                return HttpResponseRedirect('/admin_dashboard')
+            elif user.user_type == "2":
+                return HttpResponseRedirect(reverse("staff_panel"))
+            else:
+                return HttpResponseRedirect(reverse("student_panel"))
             # return HttpResponse("Email :"+request.POST.get('email')+" Password: "+request.POST.get('password'))
-            return HttpResponseRedirect('/admin_dashboard')
+            # return HttpResponseRedirect('/admin_dashboard')
         else:
             messages.error(request,'Invalid email or password')
             return HttpResponseRedirect("login")
