@@ -123,4 +123,9 @@ def view_department(request):
     departments = Department.objects.all()
     context = {'departments':departments}
     return render(request, 'main_app/admin/view_departments.html', context)
+    
+def view_staff(request):
+    staffs = Staffs.objects.all()
+    context = {'staffs':staffs}
+    return render(request, 'main_app/admin/view_staffs.html', context)
             
