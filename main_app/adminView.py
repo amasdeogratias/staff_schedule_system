@@ -134,3 +134,7 @@ def view_student(request):
     context = {'students':students}
     return render(request, 'main_app/admin/view_students.html', context)
             
+def view_course(request):
+    courses = Courses.objects.all()
+    context = {'courses':courses}
+    return render(request, 'main_app/admin/view_courses.html', context)
