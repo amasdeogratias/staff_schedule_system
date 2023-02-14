@@ -14,10 +14,10 @@ urlpatterns = [
     path('add_staff_save', adminView.add_staff_save),
     path('add_department', adminView.add_department, name='add_department'),
     path('add_department_save', adminView.add_department_save),
-    path('view_departments', adminView.all_departments),
     path('add_course', adminView.add_course, name='add_course'),
     path('add_student', adminView.add_student, name='add_student'),
     path('add_student_save', adminView.add_student_save),
     path('staff_panel', staffView.staff_panel, name='staff_panel'),
-     path('student_panel', studentView.student_panel, name='student_panel')
+     path('student_panel', studentView.student_panel, name='student_panel'),
+     path('view_departments', adminView.view_department),
 ]
