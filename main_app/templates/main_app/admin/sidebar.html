@@ -34,7 +34,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/add_department" class="nav-link">
+                {% url 'add_department' as add_department %}
+                <a href="{% url 'add_department' %}" class="nav-link {% if request.path == add_department %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     Add Department
@@ -42,7 +43,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/view_departments" class="nav-link">
+                {% url 'view_departments' as view_departments %}
+                <a href="{% url 'view_departments' %}" class="nav-link {% if request.path == view_departments %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     View Departments
@@ -61,7 +63,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/add_staff" class="nav-link">
+                {% url 'add_staff' as add_staff %}
+                <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     Add Staff
@@ -69,7 +72,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/view_staff" class="nav-link">
+                {% url 'view_staff' as view_staff %}
+                <a href="{% url 'view_staff' %}" class="nav-link {% if request.path == view_staff %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     View Staffs
@@ -88,7 +92,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/add_student" class="nav-link">
+                {% url 'add_student' as add_student %}
+                <a href="{% url 'add_student' %}" class="nav-link {% if request.path == add_student %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     Add Student
@@ -96,7 +101,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/view_student" class="nav-link">
+                {% url 'view_student' as view_student %}
+                <a href="{% url 'view_student' %}" class="nav-link {% if request.path == view_student %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     View Students
@@ -115,7 +121,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/add_course" class="nav-link">
+                {% url 'add_course' as add_course %}
+                <a href="{% url 'add_course' %}" class="nav-link {% if request.path == add_course %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     Add Course
@@ -123,7 +130,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/view_course" class="nav-link">
+                {% url 'view_course' as view_course %}
+                <a href="{% url 'view_course' %}" class="nav-link {% if request.path == view_course %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     View Courses
