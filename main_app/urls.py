@@ -21,4 +21,5 @@ urlpatterns = [
      path('student_panel', studentView.student_panel, name='student_panel'),
      path('view_departments', adminView.view_department),
      path('view_staff', adminView.view_staff),
+     path('view_student', adminView.view_student),
 ]
