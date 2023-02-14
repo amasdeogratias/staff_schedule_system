@@ -22,4 +22,5 @@ urlpatterns = [
      path('view_departments', adminView.view_department),
      path('view_staff', adminView.view_staff),
      path('view_student', adminView.view_student),
+     path('view_course', adminView.view_course),
 ]
