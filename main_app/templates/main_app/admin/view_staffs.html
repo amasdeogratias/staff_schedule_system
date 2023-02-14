@@ -36,8 +36,7 @@ List of Staffs
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th>Last Login</th>
-                    <th>Date Joined</th>
+                    <th>Department</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -50,8 +49,7 @@ List of Staffs
                     <td>{{ staff.admin.username }}</td>
                     <td>{{ staff.admin.email }}</td>
                     <td>{{ staff.address }}</td>
-                    <td>{{ staff.admin.last_login }}</td>
-                    <td>{{ staff.admin.date_joined }}</td>
+                    <td>{{ staff.department.department_name }}</td>
                     <td><a href="/edit_staff/{{ staff.admin.id }}" class="btn btn-success">Edit</a></td>
                   </tr>
                 {% endfor %}
