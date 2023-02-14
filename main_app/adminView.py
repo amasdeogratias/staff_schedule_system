@@ -128,4 +128,9 @@ def view_staff(request):
     staffs = Staffs.objects.all()
     context = {'staffs':staffs}
     return render(request, 'main_app/admin/view_staffs.html', context)
+    
+def view_student(request):
+    students = Students.objects.all()
+    context = {'students':students}
+    return render(request, 'main_app/admin/view_students.html', context)
             
