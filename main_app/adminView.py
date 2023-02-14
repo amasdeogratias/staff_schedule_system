@@ -57,9 +57,9 @@ def add_department_save(request):
             messages.error(request,'Problem in department creation')
             return HttpResponseRedirect(reverse('add_department'))
             
-def all_departments(request):
-    departments = Department.objects.all()
-    return render(request, 'main_app/admin/view_department.html',{'departments':departments})
+# def all_departments(request):
+#     departments = Department.objects.all()
+#     return render(request, 'main_app/admin/view_department.html',{'departments':departments})
     
 def add_course(request):
     departments = Department.objects.all()
@@ -118,4 +118,9 @@ def add_student_save(request):
         except:
             messages.error(request,'Failed to add student')
             return HttpResponseRedirect(reverse("add_student"))
+            
+def view_department(request):
+    departments = Department.objects.all()
+    context = {'departments':departments}
+    return render(request, 'main_app/admin/view_departments.html', context)
             

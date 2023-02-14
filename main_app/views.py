@@ -17,12 +17,19 @@ def showLoginPage(request):
     return render(request, 'main_app/login.html')
     
 def dbLogin(request):
+    # if request.user.is_authenticated:
+    #     if request.user.user_type == "1":
+    #         return HttpResponseRedirect('/admin_dashboard')
+    #     elif request.user.user_type == "2":
+    #         return HttpResponseRedirect(reverse("staff_panel"))
+    #     else:
+    #         return HttpResponseRedirect(reverse("student_panel"))
     if request.method != 'POST':
         return HttpResponse("<h2>Method not allowed</h2>")
     else:
         user=EmailBackEnd.authenticate(request,username=request.POST.get("email"),password=request.POST.get("password"))
         if user != None:
-            login(request,user)
+            login(request,user) # attach user authentication to the session login function
             if user.user_type == "1":
                 return HttpResponseRedirect('/admin_dashboard')
             elif user.user_type == "2":
