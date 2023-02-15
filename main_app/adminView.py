@@ -144,3 +144,20 @@ def edit_department(request,department_id):
     department = Department.objects.get(id=department_id)
     context = {'department':department, 'id':department_id}
     return render(request, 'main_app/admin/edit_department.html', context)
+    
+def edit_department_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        department_id = request.POST.get('department_id')
+        department_name = request.POST.get('department_name')
+        
+        try:
+            department = Department.objects.get(id=department_id)
+            department.department_name=department_name
+            department.save()
+            messages.success(request, 'Department updated successfully')
+            return HttpResponseRedirect(reverse('edit_department', kwargs={'department_id':department_id}))
+        except:
+            messages.error(request,'Failed to update department')
+            return HttpResponseRedirect(reverse('edit_department', kwargs={'department_id':department_id}))

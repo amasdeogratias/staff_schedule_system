@@ -16,7 +16,7 @@ Edit Department
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" action="/add_department_save" method="post">
+                    <form role="form" action="/edit_department_save" method="post">
                         {% csrf_token %}
                         <div class="card-body">
                             <div class="form-group col-md-6">
@@ -35,6 +35,7 @@ Edit Department
                                 <div class="form-group col-md-12">
                                     <label>Department Name</label>
                                     <input type="text" class="form-control" name="department_name" value="{{department.department_name}}" placeholder="Enter department name">
+                                    <input type="hidden"  name="department_id"  value="{{ department.id }}">
                                 </div>   
                             </div>
                             <div class="row float-right">
