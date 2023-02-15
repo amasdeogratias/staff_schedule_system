@@ -138,3 +138,9 @@ def view_course(request):
     courses = Courses.objects.all()
     context = {'courses':courses}
     return render(request, 'main_app/admin/view_courses.html', context)
+
+# edit functions    
+def edit_department(request,department_id):
+    department = Department.objects.get(id=department_id)
+    context = {'department':department, 'id':department_id}
+    return render(request, 'main_app/admin/edit_department.html', context)

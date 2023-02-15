@@ -23,4 +23,7 @@ urlpatterns = [
      path('view_staff', adminView.view_staff, name='view_staff'),
      path('view_student', adminView.view_student, name='view_student'),
      path('view_course', adminView.view_course, name='view_course'),
+     
+     # edit paths
+     path('edit_department/<str:department_id>', adminView.edit_department, name='edit_department')
 ]
