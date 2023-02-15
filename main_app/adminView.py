@@ -161,3 +161,9 @@ def edit_department_save(request):
         except:
             messages.error(request,'Failed to update department')
             return HttpResponseRedirect(reverse('edit_department', kwargs={'department_id':department_id}))
+            
+def edit_course(request, course_id):
+    course = Courses.objects.get(id=course_id)
+    departments = Department.objects.all()
+    context = {'course':course, 'departments':departments, 'id':course_id}
+    return render(request, 'main_app/admin/edit_course.html', context)
