@@ -36,7 +36,7 @@ urlpatterns = [
     path('student_panel', studentView.student_panel, name='student_panel'), 
     path('view_student', adminView.view_student, name='view_student'),
     path('edit_course/<str:course_id>', adminView.edit_course, name='edit_course'),
-    
+    path('edit_course_save', adminView.edit_course_save, name='edit_course_save'),
      
      
 ]

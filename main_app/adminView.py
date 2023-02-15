@@ -167,3 +167,27 @@ def edit_course(request, course_id):
     departments = Department.objects.all()
     context = {'course':course, 'departments':departments, 'id':course_id}
     return render(request, 'main_app/admin/edit_course.html', context)
+    
+def edit_course_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method not allowed</h2>")
+    else:
+        course_name = request.POST.get('course_name')
+        course_code = request.POST.get('course_code')
+        course_id = request.POST.get('course_id')
+        department_id = request.POST.get('department')
+        
+        
+        try:
+            course = Courses.objects.get(id=course_id)
+            department_obj = Department.objects.get(id=department_id)
+            course.course_name = course_name
+            course.course_code = course_code
+            course.department = department_obj
+            course.save()
+            messages.success(request,'Course updated successfully')
+            return HttpResponseRedirect(reverse('edit_course', kwargs={'course_id':course_id}))
+            
+        except:
+            messages.error(request, 'Failed to update course')
+            return HttpResponseRedirect(reverse('edit_course',kwargs={'course_id':course_id}))
