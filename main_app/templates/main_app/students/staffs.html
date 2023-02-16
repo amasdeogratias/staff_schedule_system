@@ -1,0 +1,57 @@
+{% extends 'main_app/admin/base.html' %}
+{% block page_title %}
+Staffs
+{% endblock page_title %}
+
+{% block content %}
+ <!-- Main content -->
+ <section class="content">
+    <div class="container-fluid">
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Staff Details</h3>
+            </div><br>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+              <table class="table table-bordered table-hover" id="example2">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Department</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for staff in staffs %}
+                  <tr>
+                    <td>{{ staff.admin.id }}</td>
+                    <td>{{ staff.admin.first_name }}</td>
+                    <td>{{ staff.admin.last_name }}</td>
+                    <td>{{ staff.admin.username }}</td>
+                    <td>{{ staff.admin.email }}</td>
+                    <td>{{ staff.address }}</td>
+                    <td>{{ staff.department.department_name }}</td>
+                    <td><a href="/edit_staff/{{ staff.admin.id }}" class="btn btn-success">View</a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+{% endblock content %}
