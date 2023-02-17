@@ -44,6 +44,7 @@ urlpatterns = [
     
     # students roles
     path('view_lectures', studentView.view_lectures, name='view_lectures'),
+    path('add_appointment', studentView.add_appointment, name='add_appointment'),
      
      
 ]
