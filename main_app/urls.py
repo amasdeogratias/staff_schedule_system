@@ -15,7 +15,8 @@ urlpatterns = [
     path('add_staff', adminView.add_staff, name='add_staff'),
     path('add_staff_save', adminView.add_staff_save, name='add_staff_save'),
     path('staff_panel', staffView.staff_panel, name='staff_panel'),
-     path('view_staff', adminView.view_staff, name='view_staff'),
+    path('view_staff', adminView.view_staff, name='view_staff'),
+    
     
     # paths for departments
     path('add_department', adminView.add_department, name='add_department'),
@@ -37,6 +38,12 @@ urlpatterns = [
     path('view_student', adminView.view_student, name='view_student'),
     path('edit_course/<str:course_id>', adminView.edit_course, name='edit_course'),
     path('edit_course_save', adminView.edit_course_save, name='edit_course_save'),
+    
+    # staffs roles
+    path('create_schedule', staffView.create_schedule, name='create_schedule'),
+    
+    # students roles
+    path('view_lectures', studentView.view_lectures, name='view_lectures'),
      
      
 ]
