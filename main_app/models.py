@@ -81,10 +81,10 @@ class Students(models.Model):
     updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
     
-class time_slots(models.Model):
-    staff=models.ForeignKey(Staffs,on_delete=models.CASCADE)
+class TimeSlot(models.Model):
+    staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     slot_date = models.DateField()
-    slot_time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
+    time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
    
