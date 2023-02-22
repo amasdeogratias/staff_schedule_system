@@ -10,46 +10,22 @@ Staffs
 
 
       <div class="row">
-        <div class="col-12">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Available Staffs</h3>
-            </div><br>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive">
-              <table class="table table-bordered table-hover" id="example2">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>User Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Department</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for staff in staffs %}
-                  <tr>
-                    <td>{{ staff.admin.id }}</td>
-                    <td>{{ staff.admin.first_name }}</td>
-                    <td>{{ staff.admin.last_name }}</td>
-                    <td>{{ staff.admin.username }}</td>
-                    <td>{{ staff.admin.email }}</td>
-                    <td>{{ staff.address }}</td>
-                    <td>{{ staff.department.department_name }}</td>
-                    <td><a href="/edit_staff/{{ staff.admin.id }}" class="btn btn-success">View</a></td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+        {% for staff in staffs %}
+        <div class="col-lg-4 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{staff.admin.first_name}} {{staff.admin.last_name}}</h3>
+
+              <p>{{staff.department.department_name}}</p>
             </div>
-            <!-- /.card-body -->
+            <div class="icon">
+              <i class="ion ion-user"></i>
+            </div>
+            <a href="#" class="small-box-footer">Book Now <i class="fas fa-arrow-circle-right"></i></a>
           </div>
-          <!-- /.card -->
         </div>
+        {% endfor %}
       </div>
     </div>
   </section>
