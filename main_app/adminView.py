@@ -8,6 +8,14 @@ from django.urls import reverse
 #
 def admin_home(request):
     return render(request,'main_app/admin/home_content.html')
+
+def admin_profile(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    context = {'user':user}
+    return render(request, 'main_app/admin/admin_profile.html', context)
+
+def admin_profile_save(request):
+    pass
     
 def add_staff(request):
     departments = Department.objects.all()
