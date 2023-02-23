@@ -10,5 +10,7 @@ def view_lectures(request):
     context = {'staffs':staffs}
     return render(request, 'main_app/students/lectures.html',context)
 
-def add_appointment(request):
-    return render(request,'main_app/students/add_booking.html')
+def add_appointment(request,staff_id):
+    staff=Staffs.objects.get(admin=staff_id)
+    context = {'staff':staff}
+    return render(request,'main_app/students/add_booking.html',context)
