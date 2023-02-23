@@ -1,6 +1,6 @@
 {% extends 'main_app/students/base.html' %} 
 {% block page_title %}
-Add Booking For | Username : {{ staff.admin.username }} |  #ID : {{ staff.admin.id }}
+Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
 {% endblock page_title %}
 {% block main_content %}
 
@@ -32,14 +32,7 @@ Add Booking For | Username : {{ staff.admin.username }} |  #ID : {{ staff.admin.
                         {% csrf_token %}
                         <div class="card-body">
                             <div class="row">
-                                <input type="text" name="staff_id" value="{{staff.admin.id}}">
-                                <div class="form-group col-md-6">
-                                    <label>Lecture</label>
-                                    <select name="lecture" id="lecture" class="form-control">
-                                        <option value="">Deo Amas</option>
-                                        <option value="">Abubakar Ismail</option>
-                                    </select>
-                                </div>
+                                <input type="hidden" name="staff_id" value="{{staff.admin.id}}">                                
                                 <div class="form-group col-md-6">
                                     <label>Booking Date</label>
                                     <input type="date" class="form-control" placeholder="Date" name="booking_date">
