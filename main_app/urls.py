@@ -18,6 +18,7 @@ urlpatterns = [
     path('add_staff_save', adminView.add_staff_save, name='add_staff_save'),
     path('staff_panel', staffView.staff_panel, name='staff_panel'),
     path('view_staff', adminView.view_staff, name='view_staff'),
+    path('edit_staff/<str:staff_id>', adminView.edit_staff, name='edit_staff'),
     
     
     # paths for departments
