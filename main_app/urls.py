@@ -48,6 +48,7 @@ urlpatterns = [
     # students roles
     path('view_lectures', studentView.view_lectures, name='view_lectures'),
     path('add_appointment/<str:staff_id>', studentView.add_appointment, name='add_appointment'),
+    path('get_time_slots', studentView.get_time_slots, name='get_time_slots'),
      
      
 ]

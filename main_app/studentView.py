@@ -26,6 +26,6 @@ def get_time_slots(request):
     list_data = []
     
     for slot in time_slots:
-        data_small = {"time":slot.time}
+        data_small = {"time":slot.time} # add data in dictionary
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data),content_type="application/json",safe=False)
