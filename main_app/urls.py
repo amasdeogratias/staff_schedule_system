@@ -43,6 +43,7 @@ urlpatterns = [
     path('student_panel', studentView.student_panel, name='student_panel'), 
     path('view_student', adminView.view_student, name='view_student'),
     path('edit_student/<str:stud_id>', adminView.edit_student, name='edit_student'),
+    path('edit_student_save', adminView.edit_student_save, name='edit_student_save'),
     
     # staffs roles
     path('create_schedule', staffView.create_schedule, name='create_schedule'),

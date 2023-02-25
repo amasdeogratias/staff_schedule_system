@@ -255,3 +255,33 @@ def edit_student(request, stud_id):
     student=Students.objects.get(admin=stud_id)
     context = {'student':student}
     return render(request,'main_app/admin/edit_student.html', context)
+
+def edit_student_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        stud_id=request.POST.get("stud_id")
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        email=request.POST.get("email")
+        username=request.POST.get("username")
+        program=request.POST.get("program")
+        gender=request.POST.get("gender")
+
+        try:
+            user=CustomUser.objects.get(id=stud_id)
+            user.first_name=first_name
+            user.last_name=last_name
+            user.email=email
+            user.username=username
+            user.save()
+
+            student_model=Students.objects.get(admin=stud_id)
+            student_model.program=program
+            student_model.gender=gender
+            student_model.save()
+            messages.success(request,"Student updated successfully")
+            return HttpResponseRedirect(reverse("edit_student",kwargs={"stud_id":stud_id}))
+        except:
+            messages.error(request,"Failed to Edit Student")
+            return HttpResponseRedirect(reverse("edit_student",kwargs={"stud_id":stud_id}))
