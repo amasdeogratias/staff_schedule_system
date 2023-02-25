@@ -1,6 +1,6 @@
 {% extends 'main_app/students/base.html' %} 
 {% block page_title %}
-Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
+Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_name }} {{ staff.admin.last_name }}</label>
 {% endblock page_title %}
 {% block main_content %}
 
@@ -12,7 +12,7 @@ Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Add New </h3>
+                        <h3 class="card-title">New Appointment</h3>
                         <div class="form-group col-md-6">
                             {% if messages %}
                                 {% for message in messages %}
@@ -28,16 +28,16 @@ Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <!-- <form role="form" action="/add_booking_save" method="post">
-                        {% csrf_token %} -->
+                    <form role="form" action="/add_booking_save" method="post">
+                        {% csrf_token %}
                         <div class="card-body">
                             <div class="row">
                                 <input type="hidden" name="staff_id" id="staff_id" value="{{staff.admin.id}}">                                
                                 <div class="form-group col-md-6">
-                                    <label>Booking Date</label>
+                                    <label>Select Appointment Date</label>
                                     <input type="text" class="form-control" id="booking_date" placeholder="Date" name="booking_date" data-toggle="datetimepicker">
                                 </div>
-                                <div id="times" class="card-footer">
+                                <div id="times" class="form-group col-md-6">
 
                                 </div>
     
@@ -46,9 +46,9 @@ Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="submit" id="fetch_times" class="btn btn-primary btn-block">Get Time Slots</button>
+                            <button type="submit" id="fetch_times" class="btn btn-primary btn-block">Make Appointment</button>
                         </div>
-                    <!-- </form> -->
+                    </form>
                 </div>
                 <!-- /.card -->
             </div>
@@ -71,12 +71,12 @@ Book Appointment For: | {{ staff.admin.first_name }} {{ staff.admin.last_name }}
            .done(function(response){
             var json_data = JSON.parse(response);
             console.log(json_data)
-                var div_data="<div class='form-group col-md-6'><label>Available Time Slots : </label><input type='text' name='time_slot' id='time_slot' class='form-control'></div><div class='form-group'><div class='row'>";
+                var div_data="<div class='form-group'><label>Available Time Slots : </label><select class='form-control' name='times'>";
                 for(key in json_data)
                 {
-                    div_data+="<div class='col-lg-2'><div class='form-check'><input type='checkbox' checked='checked' name='times[]' value='"+json_data[key]['time']+"'><label class='form-check-label'>"+json_data[key]['time']+"</label></div></div>";
+                    div_data+="<option value='"+json_data[key]['time']+"'>"+json_data[key]['time']+"</option>";
                 }
-                div_data+="</div></div>";
+                div_data+="</select></div>";
                
 
                 $("#times").html(div_data);
