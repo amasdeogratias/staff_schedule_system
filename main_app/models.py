@@ -93,7 +93,18 @@ class TimeSlot(models.Model):
     class Meta:
         db_table='time_slots'
         
+class Appointment(models.Model):
+    id=models.AutoField(primary_key=True)
+    appointment_date = models.DateField()
+    appointment_time = models.CharField(max_length=10, choices=TIME_CHOICES, default="")
+    staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        db_table = "appointments"
+        
+   
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
