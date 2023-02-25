@@ -60,6 +60,12 @@ Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_na
   {% block custom_js %}
   <script>
     $(document).ready(function(){
+        //date picker
+        $( "#booking_date" ).datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: 0
+        });
+        //display time slot on date change
         $("#booking_date").change(function(){
            var booking_date = $("#booking_date").val()
            var staff_id = $("#staff_id").val()
