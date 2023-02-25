@@ -250,3 +250,8 @@ def edit_staff_save(request):
         except:
             messages.error(request,"Failed to Edit Staff")
             return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id}))
+        
+def edit_student(request, stud_id):
+    student=Students.objects.get(admin=stud_id)
+    context = {'student':student}
+    return render(request,'main_app/admin/edit_student.html', context)
