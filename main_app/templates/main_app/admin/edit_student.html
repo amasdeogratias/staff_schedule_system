@@ -1,0 +1,81 @@
+{% extends 'main_app/admin/base.html' %} 
+{% block page_title %}
+Edit Student
+{% endblock page_title %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Student</h3>
+                        <div class="form-group col-md-6">
+                            {% if messages %}
+                                {% for message in messages %}
+                                {% if message.tags == 'error' %}
+                                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                                {% endif %}
+                                {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                                {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" action="/edit_student_save" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" class="form-control" name="stud_id" value="{{student.admin.id}}">
+
+                                <div class="form-group col-md-6">
+                                    <label>Email address</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{student.admin.email}}">
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name" name="first_name" value="{{student.admin.first_name}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{student.admin.last_name}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" placeholder="Username" name="username" value="{{student.admin.username}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Program</label>
+                                    <input type="text" class="form-control" placeholder="program" name="program" value="{{student.program}}">
+                                </div> 
+                                <div class="form-group col-md-6">
+                                    <label>Gender</label>
+                                    <select class="form-control" name="gender">
+                                        <option value="Male"{% if student.gender == 'Male' %} selected {% endif %} >Male</option>
+                                        <option value="Female"{% if student.gender == 'Female' %} selected {% endif %}>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-block">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+  {% endblock content %}
+  
