@@ -85,6 +85,7 @@ class TimeSlot(models.Model):
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     slot_date = models.DateField()
     time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
+    status = models.IntegerField(max_length=10, default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
    

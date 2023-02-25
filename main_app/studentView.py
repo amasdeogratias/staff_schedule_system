@@ -22,7 +22,7 @@ def add_appointment(request,staff_id):
 def get_time_slots(request):
     staff_id = request.POST.get("staff_id")
     booking_date = request.POST.get("booking_date")
-    time_slots = TimeSlot.objects.filter(slot_date=booking_date, staff=staff_id)
+    time_slots = TimeSlot.objects.filter(slot_date=booking_date, staff=staff_id, status=0)
     list_data = []
     
     for slot in time_slots:
