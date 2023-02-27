@@ -43,12 +43,17 @@ def add_booking_save(request):
         student_obj = CustomUser.objects.get(id = request.user.id)
         
         
+        
         try:
             appointment = Appointment.objects.create(
             appointment_date=appointment_date, appointment_time=appointment_time,
             staffId = staff_id,student = student_obj
             )
             appointment.save()
+            
+            time_slot_status = TimeSlot.objects.get(slot_date=appointment_date)
+            time_slot_status.status =1
+            time_slot_status.save()
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
         except:
