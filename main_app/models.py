@@ -98,7 +98,7 @@ class Appointment(models.Model):
     appointment_date = models.DateField()
     appointment_time = models.CharField(max_length=10, choices=TIME_CHOICES, default="")
     staffId=models.PositiveIntegerField(null=True)
-    studentId=models.PositiveIntegerField(null=True)
+    student=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
