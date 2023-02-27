@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from .forms import AddTimeSlot
-from .models import TimeSlot, CustomUser
+from .models import TimeSlot, CustomUser, Appointment
 from django.contrib import messages
 from django.urls import reverse
 
@@ -35,3 +35,9 @@ def add_slots_save(request):
         else:
             form=AddTimeSlot(request.POST)
             return render(request, "main_app/staffs/staff_schedule.html", {"form": form})
+
+def view_appointments(request):
+    staff = CustomUser.objects.get(id = request.user.id)
+    appointments = Appointment.objects.all()
+    context = {"appointments":appointments, 'staff':staff}
+    return render(request, 'main_app/staffs/all_booking.html', context)

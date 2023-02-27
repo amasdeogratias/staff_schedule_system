@@ -18,40 +18,25 @@ Home
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Student Id</th>
-                      <th>Email</th>
-                      <th>Program</th>
-                      <th>Course</th>  
-                      <th>Department</th>
+                      <th>Student</th>
+                      <th>Appointment Date</th>
+                      <th>Time Slot</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                  
+                  {% for appointment in appointments %}
                     <tr>
                       <td>1</td>
-                      <td>2020-08-01456</td>
-                      <td>abc@gmail.com</td>
-                      <td>Bsc in Computer Science</td>
-                      <td>Digital Electronics</td>
-                      <td>Electronics and Telecommunication</td>
+                      <td>{{appointment.student}}</td>
+                      <td>{{appointment.appointment_date}}</td>
+                      <td>{{appointment.appointment_time}}</td>                     
                       <td>
                         <a href="#" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
                         <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-window-close"></i></a>
                       </td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2020-08-01456</td>
-                      <td>abc@gmail.com</td>
-                      <td>Bsc in Computer Engineering</td>
-                      <td>Networking</td>
-                      <td>Computer Engineering Technology</td>
-                      <td>
-                        <a href="#" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-window-close"></i></a>
-                      </td>
-                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
