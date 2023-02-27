@@ -64,6 +64,35 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
+                Manage Courses
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_course' as add_course %}
+                <a href="{% url 'add_course' %}" class="nav-link {% if request.path == add_course %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Add Course
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'view_course' as view_course %}
+                <a href="{% url 'view_course' %}" class="nav-link {% if request.path == view_course %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    View Courses
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
                 Manage Staffs
                 <i class="fas fa-angle-left right"></i>
               </p>
@@ -113,35 +142,6 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                     View Students
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Manage Courses
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                {% url 'add_course' as add_course %}
-                <a href="{% url 'add_course' %}" class="nav-link {% if request.path == add_course %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Add Course
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                {% url 'view_course' as view_course %}
-                <a href="{% url 'view_course' %}" class="nav-link {% if request.path == view_course %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    View Courses
                   </p>
                 </a>
               </li>

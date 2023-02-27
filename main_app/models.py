@@ -85,7 +85,7 @@ class TimeSlot(models.Model):
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     slot_date = models.DateField()
     time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
-    status = models.IntegerField(max_length=10, default=0)
+    status = models.IntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
    
@@ -98,6 +98,7 @@ class Appointment(models.Model):
     appointment_date = models.DateField()
     appointment_time = models.CharField(max_length=10, choices=TIME_CHOICES, default="")
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    student=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
