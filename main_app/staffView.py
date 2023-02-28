@@ -4,11 +4,18 @@ from .forms import AddTimeSlot
 from .models import TimeSlot, CustomUser, Appointment
 from django.contrib import messages
 from django.urls import reverse
+from datetime import date
 
 #
 
 def staff_panel(request):
-    return render(request,"main_app/staffs/staff_panel.html")
+    todayAppointments = Appointment.objects.filter(appointment_date = date.today()).count()
+    appointmentcount=Appointment.objects.all().count()
+    context = {
+            'appointmentcount':appointmentcount,
+            'todayAppointments':todayAppointments
+            }
+    return render(request,"main_app/staffs/staff_panel.html", context)
 
 def create_schedule(request):
     form = AddTimeSlot()
