@@ -9,8 +9,8 @@ from datetime import date
 #
 
 def staff_panel(request):
-    todayAppointments = Appointment.objects.filter(appointment_date = date.today()).count()
-    appointmentcount=Appointment.objects.all().count()
+    todayAppointments = Appointment.objects.filter(staffId = request.user.id,appointment_date = date.today()).count()
+    appointmentcount=Appointment.objects.filter(staffId = request.user.id).count()
     context = {
             'appointmentcount':appointmentcount,
             'todayAppointments':todayAppointments
@@ -45,6 +45,6 @@ def add_slots_save(request):
 
 def view_appointments(request):
     staff = CustomUser.objects.get(id = request.user.id)
-    appointments = Appointment.objects.all()
+    appointments = Appointment.objects.filter(staffId = request.user.id)
     context = {"appointments":appointments, 'staff':staff}
     return render(request, 'main_app/staffs/all_booking.html', context)
