@@ -32,8 +32,8 @@ Home
                       <td>{{appointment.appointment_date}}</td>
                       <td>{{appointment.appointment_time}}</td>                     
                       <td>
-                        <a href="approve_appointment/{{appointment}}" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-window-close"></i></a>
+                        <a href="/approve_appointment/{{ appointment.id }}" class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
+                        <a href="/approve_appointment/{{ appointment.id }}" class="btn btn-danger btn-sm"><i class="fa fa-window-close"></i></a>
                       </td>
                     </tr>
                     {% endfor %}
