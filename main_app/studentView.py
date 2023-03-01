@@ -47,11 +47,11 @@ def add_booking_save(request):
         try:
             appointment = Appointment.objects.create(
             appointment_date=appointment_date, appointment_time=appointment_time,
-            staffId = staff_id,student = student_obj
+            staffId = staff_id,student = student_obj,status=0
             )
             appointment.save()
             
-            time_slot_status = TimeSlot.objects.get(slot_date=appointment_date)
+            time_slot_status = TimeSlot.objects.get(slot_date=appointment_date,time=appointment_time)
             time_slot_status.status =1
             time_slot_status.save()
             messages.success(request,"appointment created successfully")
