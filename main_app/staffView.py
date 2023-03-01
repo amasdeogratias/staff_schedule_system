@@ -55,7 +55,7 @@ def approve_appointment(request,appointment_id):
     appointment.save()
     return HttpResponseRedirect(reverse('appointments'))
 
-def reect_appointment(request, appointment_id):
+def reject_appointment(request, appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
     appointment.status = 2
     appointment.save()
