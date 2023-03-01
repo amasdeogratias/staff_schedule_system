@@ -48,3 +48,9 @@ def view_appointments(request):
     appointments = Appointment.objects.filter(staffId = request.user.id)
     context = {"appointments":appointments, 'staff':staff}
     return render(request, 'main_app/staffs/all_booking.html', context)
+
+def approve_appointment(request,appointment_id):
+    appointment=Appointment.objects.get(id=appointment_id)
+    appointment.status=True
+    appointment.save()
+    return HttpResponseRedirect(reverse('appointments'))

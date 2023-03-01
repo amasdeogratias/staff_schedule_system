@@ -49,6 +49,7 @@ urlpatterns = [
     path('create_schedule', staffView.create_schedule, name='create_schedule'),
     path('add_slots_save', staffView.add_slots_save, name='add_slots_save'),
     path('appointments', staffView.view_appointments, name='appointments'),
+    path('approve_appointment/<str:appointment_id>', staffView.approve_appointment, name="approve_appointment"),
     
     # students roles
     path('view_lectures', studentView.view_lectures, name='view_lectures'),
