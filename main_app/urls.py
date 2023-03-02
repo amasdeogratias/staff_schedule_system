@@ -59,6 +59,7 @@ urlpatterns = [
     path('add_appointment/<str:staff_id>', studentView.add_appointment, name='add_appointment'),
     path('get_time_slots', studentView.get_time_slots, name='get_time_slots'),
     path('add_booking_save', studentView.add_booking_save, name='add_booking_save'),
+    path('student_profile', studentView.student_profile, name='student_profile')
      
      
 ]

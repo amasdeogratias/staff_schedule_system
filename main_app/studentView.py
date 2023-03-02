@@ -52,10 +52,15 @@ def add_booking_save(request):
             appointment.save()
             
             time_slot_status = TimeSlot.objects.get(slot_date=appointment_date,time=appointment_time)
-            time_slot_status.status =1
+            time_slot_status.status = 1
             time_slot_status.save()
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
         except:
             messages.error(request,"Failed to make appointment")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
+        
+def student_profile(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    context = {'user':user}
+    return render(request, 'main_app/students/student_profile.html',context)

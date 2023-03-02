@@ -64,7 +64,7 @@ def reject_appointment(request, appointment_id):
 def staff_profile(request):
     user = CustomUser.objects.get(id = request.user.id)
     context = {'user':user}
-    return render(request, 'main_app/staffs/staff_profile.html')
+    return render(request, 'main_app/staffs/staff_profile.html',context)
 
 def staff_profile_save(request):
     if request.method != 'POST':
