@@ -8,7 +8,9 @@ from django.urls import reverse
 
 #
 def student_panel(request):
-    return render(request,"main_app/students/student_panel.html")
+    appointments = Appointment.objects.all()
+    context = {'appointments':appointments}
+    return render(request,"main_app/students/student_panel.html",context)
 
 def view_lectures(request):
     staffs = Staffs.objects.all()
