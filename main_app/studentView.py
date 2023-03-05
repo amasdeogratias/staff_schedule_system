@@ -43,13 +43,16 @@ def add_booking_save(request):
         appointment_time = request.POST.get("times")
         
         student_obj = CustomUser.objects.get(id = request.user.id)
+
+        staff = Staffs.objects.get(admin = staff_id)
+        # return HttpResponse(staff.admin.first_name + ' ' + staff.admin.last_name)
         
         
         
         try:
             appointment = Appointment.objects.create(
             appointment_date=appointment_date, appointment_time=appointment_time,
-            staffId = staff_id,student = student_obj,status=0
+            staffId = staff_id, staff_name=staff.admin.first_name + ' ' +staff.admin.last_name, student = student_obj,status=0
             )
             appointment.save()
             
