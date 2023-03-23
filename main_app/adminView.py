@@ -104,8 +104,14 @@ def add_block_save(request):
             return HttpResponseRedirect(reverse('add_block'))
 
 def view_blocks(request):
-    pass
+    blocks = Blocks.objects.all()
+    context = {'blocks':blocks}
+    return render(request, 'main_app/admin/view_blocks.html', context)
 
+def edit_block(request, block_id):
+    blocks = Blocks.objects.get(id=block_id)
+    context = {'blocks':blocks, 'id':block_id}
+    return render(request, 'main_app/admin/edit_block.html', context)
 
 def add_course(request):
     departments = Department.objects.all()
