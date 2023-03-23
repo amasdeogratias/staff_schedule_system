@@ -35,6 +35,35 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
+                Manage Blocks
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_block' as add_block %}
+                <a href="{% url 'add_block' %}" class="nav-link {% if request.path == add_block %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Add Block
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'view_blocks' as view_blocks %}
+                <a href="{% url 'view_blocks' %}" class="nav-link {% if request.path == view_blocks %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    View Blocks
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
                 Manage Departments
                 <i class="fas fa-angle-left right"></i>
               </p>

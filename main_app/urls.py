@@ -20,6 +20,10 @@ urlpatterns = [
     path('view_staff', adminView.view_staff, name='view_staff'),
     path('edit_staff/<str:staff_id>', adminView.edit_staff, name='edit_staff'),
     path('edit_staff_save', adminView.edit_staff_save, name='edit_staff_save'),
+
+    # paths for blocks
+    path('add_block',adminView.add_block, name='add_block'),
+    path('view_blocks',adminView.view_blocks, name='view_blocks'),
     
     
     # paths for departments
