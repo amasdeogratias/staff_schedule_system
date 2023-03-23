@@ -48,11 +48,26 @@ class Department(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+
+class Blocks(models.Model):
+    id = models.AutoField(primary_key=True)
+    block_name = models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.block_name
+
+class Office(models.Model):
+    id = models.AutoField(primary_key=True)
+    block = models.ForeignKey(Blocks, on_delete=models.CASCADE)
+    office_number = models.CharField(max_length=50)
     
 class Staffs(models.Model):
     id=models.AutoField(primary_key=True)
     admin=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     department=models.ForeignKey(Department,on_delete=models.CASCADE)
+    office = models.ForeignKey(Office,on_delete=models.CASCADE)
     address=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -106,12 +121,7 @@ class Appointment(models.Model):
     
     class Meta:
         db_table = "appointments"
-
-class Blocks(models.Model):
-    id = models.AutoField(primary_key=True)
-    block_name = models.CharField(max_length=255)
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at=models.DateTimeField(auto_now_add=True)
+    
         
    
 @receiver(post_save,sender=CustomUser)
