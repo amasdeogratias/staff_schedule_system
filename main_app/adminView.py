@@ -1,7 +1,7 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
-from .models import CustomUser, Department, Courses, Staffs, Students
+from .models import CustomUser, Department, Courses, Staffs, Students, Blocks
 from django.urls import reverse
 
 
@@ -88,6 +88,20 @@ def add_department_save(request):
 
 def add_block(request):
     return render(request, 'main_app/admin/add_block.html')
+
+def add_block_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        block_name = request.POST.get('block_name')
+        try:
+            block = Blocks.objects.create(block_name=block_name)
+            block.save()
+            messages.success(request, 'Block added successfully')
+            return HttpResponseRedirect(reverse('add_block'))
+        except:
+            messages.error(request,'Problem in block creation')
+            return HttpResponseRedirect(reverse('add_block'))
 
 def view_blocks(request):
     pass

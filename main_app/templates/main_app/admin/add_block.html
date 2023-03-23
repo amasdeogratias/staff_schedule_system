@@ -13,24 +13,24 @@ Add Block
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Add New Block</h3>
+                        <div class="form-group col-md-6">
+                            {% if messages %}
+                                {% for message in messages %}
+                                {% if message.tags == 'error' %}
+                                <div class="alert alert-danger">{{ message }}</div>
+                                {% endif %}
+                                {% if message.tags == 'success' %}
+                                <div class="alert alert-success">{{ message }}</div>
+                                {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <form role="form" action="/add_block_save" method="post">
                         {% csrf_token %}
                         <div class="card-body">
-                            <div class="form-group col-md-6">
-                                {% if messages %}
-                                    {% for message in messages %}
-                                    {% if message.tags == 'error' %}
-                                    <div class="alert alert-danger">{{ message }}</div>
-                                    {% endif %}
-                                    {% if message.tags == 'success' %}
-                                    <div class="alert alert-success">{{ message }}</div>
-                                    {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label>Block Name</label>
