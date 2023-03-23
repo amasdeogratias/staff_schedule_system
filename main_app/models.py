@@ -40,14 +40,14 @@ class AdminHOD(models.Model):
     admin=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()
+    
     
 class Department(models.Model):
     id=models.AutoField(primary_key=True)
     department_name=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()
+    
 
 class Blocks(models.Model):
     id = models.AutoField(primary_key=True)
@@ -62,6 +62,11 @@ class Office(models.Model):
     id = models.AutoField(primary_key=True)
     block = models.ForeignKey(Blocks, on_delete=models.CASCADE)
     office_number = models.CharField(max_length=50)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table='main_app_offices'
     
 class Staffs(models.Model):
     id=models.AutoField(primary_key=True)
@@ -71,7 +76,7 @@ class Staffs(models.Model):
     address=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()
+    
        
     
 class Courses(models.Model):
@@ -81,7 +86,7 @@ class Courses(models.Model):
     department=models.ForeignKey(Department,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager() 
+     
     
 class Students(models.Model):
     id=models.AutoField(primary_key=True)
@@ -94,7 +99,7 @@ class Students(models.Model):
     session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    objects = models.Manager()
+    
     
 class TimeSlot(models.Model):
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
