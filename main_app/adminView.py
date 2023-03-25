@@ -50,7 +50,9 @@ def add_staff_save(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
-        department_id = request.POST.get('department')  
+        department_id = request.POST.get('department') 
+        office_id = request.POST.get('office_number') 
+        
         
         #create custom user object
         try:
@@ -58,13 +60,15 @@ def add_staff_save(request):
                username=username,email=email,password=password,first_name=first_name,last_name=last_name, user_type=2)
             user.staffs.address=address
             depart_obj = Department.objects.get(id=department_id)
+            office_obj = Office.objects.get(id=office_id)
             user.staffs.department = depart_obj
+            user.staffs.office = office_obj
             user.save()
             messages.success(request, "Staff added successfully...")
             return HttpResponseRedirect(reverse("add_staff"))
             
         except:
-            messages.error(request)
+            messages.error(request, 'Problem in adding staffs')
             return HttpResponseRedirect(reverse("add_staff"))
             
 def add_department(request):
