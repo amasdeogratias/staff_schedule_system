@@ -27,6 +27,9 @@ urlpatterns = [
     path('add_block_save', adminView.add_block_save, name='add_block_save'),
     path('edit_block/<str:block_id>', adminView.edit_block, name='edit_block'),
     path('edit_block_save', adminView.edit_block_save, name='edit_block_save'),
+
+    path('add_office', adminView.add_office, name='add_office'),
+    path('view_offices', adminView.view_offices, name='view_offices'),
     
     
     # paths for departments
