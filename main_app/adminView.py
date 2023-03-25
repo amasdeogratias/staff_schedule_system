@@ -1,7 +1,7 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
-from .models import CustomUser, Department, Courses, Staffs, Students, Blocks
+from .models import CustomUser, Department, Courses, Staffs, Students, Blocks, Office
 from django.urls import reverse
 
 
@@ -135,6 +135,25 @@ def add_office(request):
 
 def view_offices(request):
     pass
+
+def add_office_save(request):
+    if request.method != 'POST':
+        return HttpResponse('<h2>Method not Allowed</h2>')
+    else:
+        block_name = request.POST.get('block_name')
+        office_number = request.POST.get('office_number')
+        block_obj = Blocks.objects.get(id=block_name) 
+
+        try:
+            office = Office.objects.create(office_number=office_number, block=block_obj)
+            office.save()
+            messages.success(request, 'Office no added successfully')
+            return HttpResponseRedirect(reverse('add_office'))
+        
+        except:
+            messages.error(request, 'Problem in adding office no')
+            return HttpResponseRedirect(reverse('add_office'))
+
 
 def add_course(request):
     departments = Department.objects.all()
