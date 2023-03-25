@@ -36,7 +36,9 @@ def admin_profile_save(request):
     
 def add_staff(request):
     departments = Department.objects.all()
-    return render(request, 'main_app/admin/add_staff.html',{'departments':departments})
+    offices = Office.objects.all()
+    context = {'departments':departments, 'offices':offices}
+    return render(request, 'main_app/admin/add_staff.html', context)
     
 def add_staff_save(request):
     if request.method != 'POST':
