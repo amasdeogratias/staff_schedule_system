@@ -128,6 +128,13 @@ def edit_block_save(request):
         except:
             messages.error(request,'Problem in block creation')
             return HttpResponseRedirect(reverse('edit_block', kwargs={'block_id':block_id}))
+        
+def add_office(request):
+    blocks = Blocks.objects.all()
+    return render(request, 'main_app/admin/add_office.html', {'blocks':blocks})
+
+def view_offices(request):
+    pass
 
 def add_course(request):
     departments = Department.objects.all()
