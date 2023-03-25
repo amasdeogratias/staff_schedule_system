@@ -134,7 +134,9 @@ def add_office(request):
     return render(request, 'main_app/admin/add_office.html', {'blocks':blocks})
 
 def view_offices(request):
-    pass
+    offices = Office.objects.all()
+    office_dict = {'offices':offices}
+    return render(request, 'main_app/admin/view_offices.html', context=office_dict)
 
 def add_office_save(request):
     if request.method != 'POST':
