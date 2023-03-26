@@ -201,8 +201,7 @@ def add_student_save(request):
         password = request.POST.get('password')
         program = request.POST.get('program') 
         gender = request.POST.get('gender') 
-        session_start = request.POST.get('session_start') 
-        session_end = request.POST.get('session_end') 
+         
         
         #create custom user object
         try:
@@ -211,8 +210,6 @@ def add_student_save(request):
             user.students.student_id=student_id
             user.students.program=program
             user.students.gender=gender
-            user.students.session_start_year=session_start
-            user.students.session_end_year=session_end
             user.save()
             messages.success(request, "Student added successfully...")
             return HttpResponseRedirect(reverse("add_student"))

@@ -95,8 +95,6 @@ class Students(models.Model):
     program=models.CharField(max_length=255,default='')
     gender=models.CharField(max_length=255)
     profile_pic=models.FileField()
-    session_start_year=models.DateField()
-    session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
@@ -137,7 +135,7 @@ def create_user_profile(sender,instance,created,**kwargs):
         if instance.user_type == 2:
             Staffs.objects.create(admin=instance,address="", department=Department.objects.get(id=1),office=Office.objects.get(id=1))
         if instance.user_type == 3:
-            Students.objects.create(admin=instance,session_start_year="2020-01-01",session_end_year="2021-01-01",profile_pic="")
+            Students.objects.create(admin=instance,profile_pic="")
 
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
