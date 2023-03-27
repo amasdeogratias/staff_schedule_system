@@ -7,7 +7,10 @@ from django.urls import reverse
 
 #
 def admin_home(request):
-    return render(request,'main_app/admin/home_content.html')
+    staffCount = Staffs.objects.count()
+    studentCount = Students.objects.count()
+    dash_dict = {'staffCount':staffCount, 'studentCount':studentCount}
+    return render(request,'main_app/admin/home_content.html', context=dash_dict)
 
 def admin_profile(request):
     user = CustomUser.objects.get(id = request.user.id)
