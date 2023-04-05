@@ -59,6 +59,14 @@ Add Staff
                                     <input type="text" class="form-control" placeholder="Address" name="address">
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label for="office">Office</label>
+                                    <select name="office_number" id="office" class="form-control">
+                                        {% for office in offices %}
+                                        <option value="{{office.id}}">{{office.office_number}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label>Department</label>
                                     <select name="department" id="department" class="form-control">
                                         {% for department in departments %}

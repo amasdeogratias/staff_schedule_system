@@ -48,3 +48,40 @@ def view_appointments(request):
     appointments = Appointment.objects.filter(staffId = request.user.id)
     context = {"appointments":appointments, 'staff':staff}
     return render(request, 'main_app/staffs/all_booking.html', context)
+
+def approve_appointment(request,appointment_id):
+    appointment=Appointment.objects.get(id=appointment_id)
+    appointment.status=1
+    appointment.save()
+    return HttpResponseRedirect(reverse('appointments'))
+
+def reject_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = 2
+    appointment.save()
+    return HttpResponseRedirect(reverse('appointments'))
+
+def staff_profile(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    context = {'user':user}
+    return render(request, 'main_app/staffs/staff_profile.html',context)
+
+def staff_profile_save(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse('staff_profile'))
+    else:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        password=request.POST.get("password")
+        try:
+            customuser = CustomUser.objects.get(id=request.user.id)
+            customuser.first_name = first_name
+            customuser.last_name = last_name
+            if password != None and password != '':
+                customuser.set_password(password)
+            customuser.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("staff_profile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("staff_profile"))

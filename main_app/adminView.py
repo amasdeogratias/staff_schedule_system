@@ -1,13 +1,16 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
-from .models import CustomUser, Department, Courses, Staffs, Students
+from .models import CustomUser, Department, Courses, Staffs, Students, Blocks, Office
 from django.urls import reverse
 
 
 #
 def admin_home(request):
-    return render(request,'main_app/admin/home_content.html')
+    staffCount = Staffs.objects.count()
+    studentCount = Students.objects.count()
+    dash_dict = {'staffCount':staffCount, 'studentCount':studentCount}
+    return render(request,'main_app/admin/home_content.html', context=dash_dict)
 
 def admin_profile(request):
     user = CustomUser.objects.get(id = request.user.id)
@@ -36,7 +39,9 @@ def admin_profile_save(request):
     
 def add_staff(request):
     departments = Department.objects.all()
-    return render(request, 'main_app/admin/add_staff.html',{'departments':departments})
+    offices = Office.objects.all()
+    context = {'departments':departments, 'offices':offices}
+    return render(request, 'main_app/admin/add_staff.html', context)
     
 def add_staff_save(request):
     if request.method != 'POST':
@@ -48,7 +53,9 @@ def add_staff_save(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
-        department_id = request.POST.get('department')  
+        department_id = request.POST.get('department') 
+        office_id = request.POST.get('office_number') 
+        
         
         #create custom user object
         try:
@@ -56,13 +63,15 @@ def add_staff_save(request):
                username=username,email=email,password=password,first_name=first_name,last_name=last_name, user_type=2)
             user.staffs.address=address
             depart_obj = Department.objects.get(id=department_id)
+            office_obj = Office.objects.get(id=office_id)
             user.staffs.department = depart_obj
+            user.staffs.office = office_obj
             user.save()
             messages.success(request, "Staff added successfully...")
             return HttpResponseRedirect(reverse("add_staff"))
             
         except:
-            messages.error(request)
+            messages.error(request, 'Problem in adding staffs')
             return HttpResponseRedirect(reverse("add_staff"))
             
 def add_department(request):
@@ -85,7 +94,78 @@ def add_department_save(request):
 # def all_departments(request):
 #     departments = Department.objects.all()
 #     return render(request, 'main_app/admin/view_department.html',{'departments':departments})
-    
+
+def add_block(request):
+    return render(request, 'main_app/admin/add_block.html')
+
+def add_block_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        block_name = request.POST.get('block_name')
+        try:
+            block = Blocks.objects.create(block_name=block_name)
+            block.save()
+            messages.success(request, 'Block added successfully')
+            return HttpResponseRedirect(reverse('add_block'))
+        except:
+            messages.error(request,'Problem in block creation')
+            return HttpResponseRedirect(reverse('add_block'))
+
+def view_blocks(request):
+    blocks = Blocks.objects.all()
+    context = {'blocks':blocks}
+    return render(request, 'main_app/admin/view_blocks.html', context)
+
+def edit_block(request, block_id):
+    blocks = Blocks.objects.get(id=block_id)
+    context = {'blocks':blocks, 'id':block_id}
+    return render(request, 'main_app/admin/edit_block.html', context)
+
+def edit_block_save(request):
+    if request.method != 'POST':
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        block_id = request.POST.get('block_id')
+        block_name = request.POST.get('block_name')
+        try:
+            block = Blocks.objects.get(id=block_id)
+            block.block_name = block_name
+            block.save()
+            messages.success(request, 'Block updated successfully')
+            return HttpResponseRedirect(reverse('edit_block', kwargs={'block_id':block_id}))
+        except:
+            messages.error(request,'Problem in block creation')
+            return HttpResponseRedirect(reverse('edit_block', kwargs={'block_id':block_id}))
+        
+def add_office(request):
+    blocks = Blocks.objects.all()
+    return render(request, 'main_app/admin/add_office.html', {'blocks':blocks})
+
+def view_offices(request):
+    offices = Office.objects.all()
+    office_dict = {'offices':offices}
+    return render(request, 'main_app/admin/view_offices.html', context=office_dict)
+
+def add_office_save(request):
+    if request.method != 'POST':
+        return HttpResponse('<h2>Method not Allowed</h2>')
+    else:
+        block_name = request.POST.get('block_name')
+        office_number = request.POST.get('office_number')
+        block_obj = Blocks.objects.get(id=block_name) 
+
+        try:
+            office = Office.objects.create(office_number=office_number, block=block_obj)
+            office.save()
+            messages.success(request, 'Office no added successfully')
+            return HttpResponseRedirect(reverse('add_office'))
+        
+        except:
+            messages.error(request, 'Problem in adding office no')
+            return HttpResponseRedirect(reverse('add_office'))
+
+
 def add_course(request):
     departments = Department.objects.all()
     return render(request, 'main_app/admin/add_course.html', {'departments':departments})
@@ -124,8 +204,7 @@ def add_student_save(request):
         password = request.POST.get('password')
         program = request.POST.get('program') 
         gender = request.POST.get('gender') 
-        session_start = request.POST.get('session_start') 
-        session_end = request.POST.get('session_end') 
+         
         
         #create custom user object
         try:
@@ -134,8 +213,6 @@ def add_student_save(request):
             user.students.student_id=student_id
             user.students.program=program
             user.students.gender=gender
-            user.students.session_start_year=session_start
-            user.students.session_end_year=session_end
             user.save()
             messages.success(request, "Student added successfully...")
             return HttpResponseRedirect(reverse("add_student"))

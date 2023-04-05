@@ -27,6 +27,9 @@
   <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
     {% block custom_css %}{% endblock custom_css %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -125,6 +128,9 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!--datatables-->
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
 
 
 {% block custom_js %}
