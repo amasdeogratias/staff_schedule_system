@@ -2,10 +2,12 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
 from .models import CustomUser, Department, Courses, Staffs, Students, Blocks, Office
+from django.views.decorators.cache import cache_control
 from django.urls import reverse
 
 
 #
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_home(request):
     staffCount = Staffs.objects.count()
     studentCount = Students.objects.count()
