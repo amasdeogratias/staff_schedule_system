@@ -108,7 +108,7 @@ def add_block_save(request):
     if request.method != 'POST':
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        block_name = request.POST.get('block_name')
+        block_name = request.POST.get('block_name').upper()
         try:
             block = Blocks.objects.create(block_name=block_name)
             block.save()
@@ -133,7 +133,7 @@ def edit_block_save(request):
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         block_id = request.POST.get('block_id')
-        block_name = request.POST.get('block_name')
+        block_name = request.POST.get('block_name').upper()
         try:
             block = Blocks.objects.get(id=block_id)
             block.block_name = block_name
