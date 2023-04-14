@@ -85,7 +85,9 @@ def add_department_save(request):
     if request.method != 'POST':
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        department_name = request.POST.get('department_name')
+        form = AddDepartment(request.POST)
+        if form.is_valid():
+            department_name = form.cleaned_data['department_name']
         try:
             department = Department.objects.create(department_name=department_name)
             department.save()
