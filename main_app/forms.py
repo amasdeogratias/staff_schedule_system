@@ -35,3 +35,10 @@ class AddTimeSlot(forms.Form):
     )
     slot_date=forms.DateField(label="Date", widget=DateInput(attrs={"class":"form-control"}))
     time=forms.ChoiceField(label="Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control"}))
+    
+class AddDepartment(forms.Form):
+    Department_Choices = (
+        ("Department of Computer Science & Engineering (CSE)"),
+        ("Department of Electronics and Telecommunication Engineering (ETE)"),
+        )
+    department_name = forms.CharField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
