@@ -38,8 +38,8 @@ class AddTimeSlot(forms.Form):
     
 class AddDepartment(forms.Form):
     Department_Choices = (
-        ("Department of Computer Science & Engineering (CSE)"),
-        ("Department of Electronics and Telecommunication Engineering (ETE)"),
+        ("Department of Computer Science & Engineering (CSE)", "Department of Computer Science & Engineering (CSE)"),
+        ("Department of Electronics and Telecommunication Engineering (ETE)", "Department of Electronics and Telecommunication Engineering (ETE)"),
         )
     department_name = forms.ChoiceField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
     

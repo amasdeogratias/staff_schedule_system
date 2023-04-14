@@ -2,6 +2,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
 from .models import CustomUser, Department, Courses, Staffs, Students, Blocks, Office
+from .forms import AddDepartment
 from django.views.decorators.cache import cache_control
 from django.urls import reverse
 
@@ -77,7 +78,8 @@ def add_staff_save(request):
             return HttpResponseRedirect(reverse("add_staff"))
             
 def add_department(request):
-    return render(request, 'main_app/admin/add_department.html')
+    form = AddDepartment()
+    return render(request, 'main_app/admin/add_department.html', {"form":form})
     
 def add_department_save(request):
     if request.method != 'POST':
