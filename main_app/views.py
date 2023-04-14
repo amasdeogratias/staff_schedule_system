@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .EmailBackEnd import EmailBackEnd
 from django.contrib import messages
 from django.urls import reverse
+from django.views.decorators.cache import cache_control
 
 
 # Create your views here.
@@ -16,6 +17,7 @@ def home(request):
 def showLoginPage(request):
     return render(request, 'main_app/login.html')
     
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dbLogin(request):
     # if request.user.is_authenticated:
     #     if request.user.user_type == "1":
@@ -47,7 +49,8 @@ def getUserDetails(request):
         return HttpResponse("User : "+request.user.email+" usertype : "+str(request.user.user_type))
     else:
         return HttpResponse('Please login first')
-        
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True )      
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('login')
