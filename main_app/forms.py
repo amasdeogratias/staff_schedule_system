@@ -41,4 +41,10 @@ class AddDepartment(forms.Form):
         ("Department of Computer Science & Engineering (CSE)"),
         ("Department of Electronics and Telecommunication Engineering (ETE)"),
         )
-    department_name = forms.CharField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
+    department_name = forms.ChoiceField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
+    
+    def clean_name(self):
+        name = self.cleaned_data.get("department_name")
+        if not name:
+            raise forms.ValidationError("Department name can not be empty.")
+        return name
