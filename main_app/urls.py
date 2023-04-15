@@ -31,6 +31,7 @@ urlpatterns = [
     path('add_office', adminView.add_office, name='add_office'),
     path('view_offices', adminView.view_offices, name='view_offices'),
     path('add_office_save', adminView.add_office_save, name='add_office_save'),
+    path('edit_office/<str:office_id>', adminView.edit_office, name='edit_office'),
     
     
     # paths for departments
