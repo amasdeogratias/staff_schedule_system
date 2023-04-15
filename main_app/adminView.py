@@ -177,6 +177,29 @@ def edit_office(request,office_id):
     office_dict = {"office":office, "id":office_id, "blocks":blocks}
     return render(request, 'main_app/admin/edit_office.html', context=office_dict)
 
+def edit_office_save(request):
+    if request.method != 'POST':
+        return HttpResponse('<h2>Method not Allowed</h2>')
+    else:
+        office_id = request.POST.get('office_id')
+        block_id = request.POST.get('block_name')
+        office_number = request.POST.get('office_number')
+        block_obj = Blocks.objects.get(id=block_id)
+         
+
+        try:
+            office = Office.objects.get(id = office_id)
+            office.office_number = office_number
+            office.block_name = block_obj
+            office.save()
+            messages.success(request, 'Office no updated successfully')
+            return HttpResponseRedirect(reverse('edit_office', kwargs={"office_id":office_id}))
+        
+        except:
+            messages.error(request, 'Problem in updating office no')
+            return HttpResponseRedirect(reverse('edit_office', kwargs={"office_id":office_id}))
+    
+
 
 def add_course(request):
     departments = Department.objects.all()
