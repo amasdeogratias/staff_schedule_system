@@ -170,6 +170,12 @@ def add_office_save(request):
         except:
             messages.error(request, 'Problem in adding office no')
             return HttpResponseRedirect(reverse('add_office'))
+        
+def edit_office(request,office_id):
+    office = Office.objects.get(id=office_id)
+    blocks = Blocks.objects.all()
+    office_dict = {"office":office, "id":office_id, "blocks":blocks}
+    return render(request, 'main_app/admin/edit_office.html', context=office_dict)
 
 
 def add_course(request):
