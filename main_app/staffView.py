@@ -5,6 +5,7 @@ from .models import TimeSlot, CustomUser, Appointment
 from django.contrib import messages
 from django.urls import reverse
 from datetime import date
+from django.core.mail import send_mail
 
 #
 
@@ -51,8 +52,11 @@ def view_appointments(request):
 
 def approve_appointment(request,appointment_id):
     appointment=Appointment.objects.get(id=appointment_id)
+    student_email = appointment.student.email
+    appointment_details = f'Student Name: {appointment.student.first_name}\nAppointment Time: {appointment.appointment_time}'
     appointment.status=1
     appointment.save()
+    send_appointment_accepted_email(student_email, appointment_details)
     return HttpResponseRedirect(reverse('appointments'))
 
 def reject_appointment(request, appointment_id):
@@ -85,3 +89,10 @@ def staff_profile_save(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("staff_profile"))
+
+def send_appointment_accepted_email(student_email, appointment_details):
+    subject = 'Appointment Accepted'
+    message = f'Hi, your appointment has been accepted. Here are the details:\n\n{appointment_details}'
+    from_email = 'teacher-email@gmail.com'
+    recipient_list = [student_email]
+    send_mail(subject, message, from_email, recipient_list)
