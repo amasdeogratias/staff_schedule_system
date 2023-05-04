@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.urls import reverse
 from datetime import date
 from django.core.mail import send_mail
+from schoo_demo.settings import EMAIL_HOST_USER
 
 #
 
@@ -93,6 +94,6 @@ def staff_profile_save(request):
 def send_appointment_accepted_email(student_email, appointment_details):
     subject = 'Appointment Accepted'
     message = f'Hi, your appointment has been accepted. Here are the details:\n\n{appointment_details}'
-    from_email = 'teacher-email@gmail.com'
+    from_email = EMAIL_HOST_USER
     recipient_list = [student_email]
     send_mail(subject, message, from_email, recipient_list)
