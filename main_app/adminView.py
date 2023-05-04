@@ -88,14 +88,17 @@ def add_department_save(request):
         form = AddDepartment(request.POST)
         if form.is_valid():
             department_name = form.cleaned_data['department_name']
-        try:
-            department = Department.objects.create(department_name=department_name)
-            department.save()
-            messages.success(request, 'Department added successfully')
-            return HttpResponseRedirect(reverse('add_department'))
-        except:
-            messages.error(request,'Problem in department creation')
-            return HttpResponseRedirect(reverse('add_department'))
+            try:
+                department = Department.objects.create(department_name=department_name)
+                department.save()
+                messages.success(request, 'Department added successfully')
+                return HttpResponseRedirect(reverse('add_department'))
+            except:
+                messages.error(request,'Problem in department creation')
+                return HttpResponseRedirect(reverse('add_department'))
+        else:
+            form = AddDepartment()
+            return render(request, 'main_app/admin/add_department.html', {"form":form})
             
 # def all_departments(request):
 #     departments = Department.objects.all()

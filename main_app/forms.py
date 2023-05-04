@@ -1,5 +1,5 @@
 from django import forms
-from .models import TimeSlot
+from .models import Department
 
 #
 class DateInput(forms.DateInput):
@@ -43,8 +43,11 @@ class AddDepartment(forms.Form):
         )
     department_name = forms.ChoiceField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
     
-    def clean_name(self):
+    def clean_department_name(self):
         name = self.cleaned_data.get("department_name")
         if not name:
             raise forms.ValidationError("Department name can not be empty.")
+        if Department.objects.filter(department_name=name).exists():
+            raise forms.ValidationError('This field already exists.')
         return name
+    
