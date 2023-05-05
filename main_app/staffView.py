@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from .forms import AddTimeSlot
-from .models import TimeSlot, CustomUser, Appointment
+from .models import TimeSlot, CustomUser, Appointment, Staffs
 from django.contrib import messages
 from django.urls import reverse
 from datetime import date
@@ -53,8 +53,14 @@ def view_appointments(request):
 
 def approve_appointment(request,appointment_id):
     appointment=Appointment.objects.get(id=appointment_id)
-    student_email = appointment.student.email
-    appointment_details = f'Student Name: {appointment.student.first_name}\nAppointment Time: {appointment.appointment_time}'
+    student_email = appointment.student.email  # get student email
+    staff_id = appointment.staffId # get lecture id from appoint model
+    
+    staff_email = CustomUser.objects.get(id=staff_id) # compare id with customuser
+    
+    from_email = staff_email.email # get lectures email
+    
+    appointment_details = f'Lecture Name: {appointment.staff_name}, Email: {from_email} \nStudent Name: {appointment.student.first_name}\nAppointment Time: {appointment.appointment_time}'
     appointment.status=1
     appointment.save()
     send_appointment_accepted_email(student_email, appointment_details)
@@ -94,6 +100,6 @@ def staff_profile_save(request):
 def send_appointment_accepted_email(student_email, appointment_details):
     subject = 'Appointment Accepted'
     message = f'Hi, your appointment has been accepted. Here are the details:\n\n{appointment_details}'
-    from_email = EMAIL_HOST_USER
+    from_email = EMAIL_HOST_USER 
     recipient_list = [student_email]
     send_mail(subject, message, from_email, recipient_list)
