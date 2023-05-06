@@ -39,7 +39,8 @@ Add Student
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Email address</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" autocomplete="off" required>
+                                    <span class="error" id="invalid_email"></span>
                                 </div>
                                 
                                 <div class="form-group col-md-6">
@@ -57,7 +58,7 @@ Add Student
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" placeholder="Username" name="username" required>
+                                    <input type="text" class="form-control" placeholder="Username" name="username" autocomplete="off" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Program</label>
@@ -87,4 +88,22 @@ Add Student
 </section>
 <!-- /.content -->
   {% endblock content %}
+  
+  {% block custom_js %}
+  <script>
+    $(document).ready(function(){
+        $("#email").keyup(function(){
+            var email = $("#email").val();
+            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!filter.test(email)) {
+            $("#invalid_email").text(email+" is not a valid email").css("color","red");
+            email.focus;
+            } else {
+                $("#invalid_email").text("");
+            }
+        });
+    });
+
+  </script>
+  {% endblock custom_js %}
   

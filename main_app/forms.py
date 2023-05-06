@@ -1,5 +1,6 @@
 from django import forms
 from .models import Department
+from django.core.exceptions import ValidationError
 
 #
 class DateInput(forms.DateInput):
@@ -46,8 +47,8 @@ class AddDepartment(forms.Form):
     def clean_department_name(self):
         name = self.cleaned_data.get("department_name")
         if not name:
-            raise forms.ValidationError("Department name can not be empty.")
+            raise ValidationError("Department name can not be empty.")
         if Department.objects.filter(department_name=name).exists():
-            raise forms.ValidationError('This field already exists.')
+            raise ValidationError('This field already exists.')
         return name
     
