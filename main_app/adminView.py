@@ -2,6 +2,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render
 from .models import CustomUser, Department, Courses, Staffs, Students, Blocks, Office
+from .forms import AddDepartment
 from django.views.decorators.cache import cache_control
 from django.urls import reverse
 
@@ -77,21 +78,27 @@ def add_staff_save(request):
             return HttpResponseRedirect(reverse("add_staff"))
             
 def add_department(request):
-    return render(request, 'main_app/admin/add_department.html')
+    form = AddDepartment()
+    return render(request, 'main_app/admin/add_department.html', {"form":form})
     
 def add_department_save(request):
     if request.method != 'POST':
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        department_name = request.POST.get('department_name')
-        try:
-            department = Department.objects.create(department_name=department_name)
-            department.save()
-            messages.success(request, 'Department added successfully')
-            return HttpResponseRedirect(reverse('add_department'))
-        except:
-            messages.error(request,'Problem in department creation')
-            return HttpResponseRedirect(reverse('add_department'))
+        form = AddDepartment(request.POST)
+        if form.is_valid():
+            department_name = form.cleaned_data['department_name']
+            try:
+                department = Department.objects.create(department_name=department_name)
+                department.save()
+                messages.success(request, 'Department added successfully')
+                return HttpResponseRedirect(reverse('add_department'))
+            except:
+                messages.error(request,'Problem in department creation')
+                return HttpResponseRedirect(reverse('add_department'))
+        else:
+            form = AddDepartment()
+            return render(request, 'main_app/admin/add_department.html', {"form":form})
             
 # def all_departments(request):
 #     departments = Department.objects.all()
@@ -104,7 +111,7 @@ def add_block_save(request):
     if request.method != 'POST':
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        block_name = request.POST.get('block_name')
+        block_name = request.POST.get('block_name').upper()
         try:
             block = Blocks.objects.create(block_name=block_name)
             block.save()
@@ -129,7 +136,7 @@ def edit_block_save(request):
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         block_id = request.POST.get('block_id')
-        block_name = request.POST.get('block_name')
+        block_name = request.POST.get('block_name').upper()
         try:
             block = Blocks.objects.get(id=block_id)
             block.block_name = block_name
@@ -166,6 +173,35 @@ def add_office_save(request):
         except:
             messages.error(request, 'Problem in adding office no')
             return HttpResponseRedirect(reverse('add_office'))
+        
+def edit_office(request,office_id):
+    office = Office.objects.get(id=office_id)
+    blocks = Blocks.objects.all()
+    office_dict = {"office":office, "id":office_id, "blocks":blocks}
+    return render(request, 'main_app/admin/edit_office.html', context=office_dict)
+
+def edit_office_save(request):
+    if request.method != 'POST':
+        return HttpResponse('<h2>Method not Allowed</h2>')
+    else:
+        office_id = request.POST.get('office_id')
+        block_id = request.POST.get('block_name')
+        office_number = request.POST.get('office_number')
+        block_obj = Blocks.objects.get(id=block_id)
+         
+
+        try:
+            office = Office.objects.get(id = office_id)
+            office.office_number = office_number
+            office.block_name = block_obj
+            office.save()
+            messages.success(request, 'Office no updated successfully')
+            return HttpResponseRedirect(reverse('edit_office', kwargs={"office_id":office_id}))
+        
+        except:
+            messages.error(request, 'Problem in updating office no')
+            return HttpResponseRedirect(reverse('edit_office', kwargs={"office_id":office_id}))
+    
 
 
 def add_course(request):

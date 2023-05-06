@@ -13,6 +13,7 @@ Edit Course
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">edit course</h3>
+                        <a href="{% url 'view_course' %}" class="btn btn-info" style="float: right;"><i class="fa fa-list">View courses</i></a>
                         <div class="form-group col-md-6">
                             {% if messages %}
                                 {% for message in messages %}
@@ -34,13 +35,13 @@ Edit Course
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Course name</label>
-                                    <input type="text" class="form-control" name="course_name" value="{{course.course_name}}" placeholder="Enter Course name">
+                                    <input type="text" class="form-control" name="course_name" value="{{course.course_name}}" placeholder="Enter Course name" required>
                                     <input type="hidden" class="form-control" name="course_id" value="{{course.id}}">
                                 </div>
                                 
                                 <div class="form-group col-md-6">
                                     <label>Course code</label>
-                                    <input type="text" class="form-control" placeholder="Enter Course code" name="course_code" value="{{course.course_code}}">
+                                    <input type="text" class="form-control" placeholder="Enter Course code" name="course_code" value="{{course.course_code}}" required>
                                 </div>
 
                                 <div class="form-group col-md-6">

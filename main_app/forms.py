@@ -1,5 +1,6 @@
 from django import forms
-from .models import TimeSlot
+from .models import Department
+from django.core.exceptions import ValidationError
 
 #
 class DateInput(forms.DateInput):
@@ -35,3 +36,19 @@ class AddTimeSlot(forms.Form):
     )
     slot_date=forms.DateField(label="Date", widget=DateInput(attrs={"class":"form-control"}))
     time=forms.ChoiceField(label="Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control"}))
+    
+class AddDepartment(forms.Form):
+    Department_Choices = (
+        ("Department of Computer Science & Engineering (CSE)", "Department of Computer Science & Engineering (CSE)"),
+        ("Department of Electronics and Telecommunication Engineering (ETE)", "Department of Electronics and Telecommunication Engineering (ETE)"),
+        )
+    department_name = forms.ChoiceField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
+    
+    def clean_department_name(self):
+        name = self.cleaned_data.get("department_name")
+        if not name:
+            raise ValidationError("Department name can not be empty.")
+        if Department.objects.filter(department_name=name).exists():
+            raise ValidationError('This field already exists.')
+        return name
+    
