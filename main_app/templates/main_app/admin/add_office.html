@@ -13,6 +13,7 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Add Office No</h3>
+                        <a href="{% url 'view_offices' %}" class="btn btn-info" style="float: right;"><i class="fa fa-list">View offices</i></a>
                         <div class="form-group col-md-6">
                             {% if messages %}
                                 {% for message in messages %}
