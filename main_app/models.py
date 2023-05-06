@@ -51,7 +51,7 @@ class Department(models.Model):
 
 class Blocks(models.Model):
     id = models.AutoField(primary_key=True)
-    block_name = models.CharField(max_length=255)
+    block_name = models.CharField(max_length=255, unique=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
 
