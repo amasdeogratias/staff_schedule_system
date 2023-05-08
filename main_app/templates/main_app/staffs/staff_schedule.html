@@ -38,3 +38,20 @@ Schedule Time Slots
 </section>
 <!-- /.content -->
 {% endblock main_content %}
+
+{% block custom_js %}
+<script>
+    $(document).ready(function(){
+     $("#levels").change( function(){
+         if($(this).val() == "undergraduate"){
+             $('#under_graduate').show();
+             $('#post_graduate').remove();
+         }else if($(this).val() == "postgraduate"){
+            $('#under_graduate').remove();
+             $('#post_graduate').show();
+         }
+     });
+  }); 
+  </script>
+
+{% endblock custom_js %}
