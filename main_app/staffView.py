@@ -30,11 +30,15 @@ def add_slots_save(request):
         form = AddTimeSlot(request.POST)
         if form.is_valid():
             slot_date = form.cleaned_data["slot_date"]
-            slot_time = form.cleaned_data["time"]
+            undergraduate_time = form.cleaned_data["undergraduate_time"]
+            postgraduate_time = form.cleaned_data["postgraduate_time"]
+            education_level = form.cleaned_data["education_level"]
+            
+            
             
             try:
                 staff = CustomUser.objects.get(id=request.user.id)
-                timeslot = TimeSlot.objects.create(slot_date = slot_date, time = slot_time, staff = staff)
+                timeslot = TimeSlot.objects.create(slot_date = slot_date, time = undergraduate_time or postgraduate_time, education_level=education_level, staff = staff)
                 timeslot.save()
                 messages.success(request, 'Time slots added successfully')
                 return HttpResponseRedirect(reverse('create_schedule'))

@@ -31,6 +31,11 @@ TIME_CHOICES = (
     ("7:30 PM", "7:30 PM"),
 )
 
+Education_level = (
+        ('undergraduate', 'undergraduate'),
+        ('postgraduate', 'postgraduate'),
+    )
+
 class CustomUser(AbstractUser):
     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
@@ -104,6 +109,7 @@ class TimeSlot(models.Model):
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     slot_date = models.DateField()
     time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
+    education_level = models.CharField(max_length=50, choices=Education_level, default="undergraduate")
     status = models.IntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
