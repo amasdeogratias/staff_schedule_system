@@ -56,6 +56,11 @@ class AddTimeSlot(forms.Form):
     undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate"}))
     postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate"}))
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['undergraduate_time'].required = False
+        self.fields['postgraduate_time'].required = False
+    
 class AddDepartment(forms.Form):
     Department_Choices = (
         ("Department of Computer Science & Engineering (CSE)", "Department of Computer Science & Engineering (CSE)"),
