@@ -53,6 +53,17 @@ Edit Student
                                     <input type="text" class="form-control" placeholder="Username" name="username" value="{{student.admin.username}}" required>
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label>Level</label>
+                                    <select class="form-control" name="level">
+                                        <option value="Undergraduate"{% if student.level == 'Undergraduate' %}
+                                          selected
+                                        {% endif %}>Undergraduate</option>
+                                        <option value="Postgraduate"{% if student.level == 'Postgraduate' %}
+                                          selected
+                                        {% endif %}>Postgraduate</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label>Program</label>
                                     <input type="text" class="form-control" placeholder="program" name="program" value="{{student.program}}" required>
                                 </div> 
