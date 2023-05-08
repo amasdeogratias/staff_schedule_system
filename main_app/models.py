@@ -95,6 +95,7 @@ class Students(models.Model):
     program=models.CharField(max_length=255,default='')
     gender=models.CharField(max_length=255)
     profile_pic=models.FileField()
+    level = models.CharField(max_length=255,default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
