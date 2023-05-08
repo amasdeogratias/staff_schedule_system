@@ -242,6 +242,7 @@ def add_student_save(request):
         password = request.POST.get('password')
         program = request.POST.get('program') 
         gender = request.POST.get('gender') 
+        level = request.POST.get('level') 
          
         
         #create custom user object
@@ -251,6 +252,7 @@ def add_student_save(request):
             user.students.student_id=student_id
             user.students.program=program
             user.students.gender=gender
+            user.students.level=level
             user.save()
             messages.success(request, "Student added successfully...")
             return HttpResponseRedirect(reverse("add_student"))
@@ -382,6 +384,7 @@ def edit_student_save(request):
         username=request.POST.get("username")
         program=request.POST.get("program")
         gender=request.POST.get("gender")
+        level=request.POST.get("level")
 
         try:
             user=CustomUser.objects.get(id=stud_id)
@@ -394,6 +397,7 @@ def edit_student_save(request):
             student_model=Students.objects.get(admin=stud_id)
             student_model.program=program
             student_model.gender=gender
+            student_model.level=level
             student_model.save()
             messages.success(request,"Student updated successfully")
             return HttpResponseRedirect(reverse("edit_student",kwargs={"stud_id":stud_id}))
