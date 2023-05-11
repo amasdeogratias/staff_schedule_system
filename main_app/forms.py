@@ -1,6 +1,7 @@
 from django import forms
 from .models import Department
 from django.core.exceptions import ValidationError
+from datetime import date
 
 #
 class DateInput(forms.DateInput):
@@ -48,13 +49,14 @@ class AddTimeSlot(forms.Form):
     ("5 PM - 6 PM", "5 PM - 6 PM"),
 )
     Education_level = (
+        # ('Select Education level...', 'Select Education level...'),
         ('undergraduate', 'undergraduate'),
         ('postgraduate', 'postgraduate'),
     )
-    slot_date=forms.DateField(label="Date", widget=DateInput(attrs={"class":"form-control"}))
+    slot_date=forms.CharField(label="Date", widget=forms.TextInput(attrs={"class":"form-control","id":"slot_date","value":date.today()}))
     education_level=forms.ChoiceField(label="Education Level", choices=Education_level, widget=forms.Select(attrs={"class":"form-control","id":"levels"}))
-    undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate"}))
-    postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate"}))
+    undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate","hidden":"hidden"}))
+    postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate","hidden":"hidden"}))
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

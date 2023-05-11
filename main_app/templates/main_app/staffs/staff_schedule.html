@@ -41,14 +41,18 @@ Schedule Time Slots
 
 {% block custom_js %}
 <script>
+     $("#slot_date").datepicker({
+            minDate:0
+        })
     $(document).ready(function(){
      $("#levels").change( function(){
-         if($(this).val() == "undergraduate"){
-             $('#under_graduate').show();
-             $('#post_graduate').remove();
-         }else if($(this).val() == "postgraduate"){
-            $('#under_graduate').remove();
-             $('#post_graduate').show();
+         if($(this).val() != "undergraduate"){
+            $('#under_graduate').attr('hidden',true);
+             $('#post_graduate').removeAttr("hidden");
+             
+         }else {
+            $('#under_graduate').removeAttr("hidden");
+             $('#post_graduate').attr('hidden',true);
          }
      });
   }); 
