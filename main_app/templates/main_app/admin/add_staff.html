@@ -13,6 +13,7 @@ Add Staff
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Add New Staff</h3>
+                        <a href="{% url 'view_staff' %}" class="btn btn-info" style="float: right;"><i class="fa fa-list">View staff</i></a>
                         <div class="form-group col-md-6">
                             {% if messages %}
                                 {% for message in messages %}

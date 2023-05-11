@@ -69,10 +69,11 @@ class AddDepartment(forms.Form):
     department_name = forms.ChoiceField(label="Department name", choices=Department_Choices, widget=forms.Select(attrs={"class":"form-control"}))
     
     def clean_department_name(self):
-        name = self.cleaned_data.get("department_name")
-        if not name:
-            raise ValidationError("Department name can not be empty.")
-        if Department.objects.filter(department_name=name).exists():
+        name = self.cleaned_data['department_name']
+        # Retrieve the existing department choices
+        existing_choices = dict(self.fields['department_name'].choices)
+        # Check if the department name already exists in the choices
+        if name in existing_choices:
             raise ValidationError('This field already exists.')
         return name
     
