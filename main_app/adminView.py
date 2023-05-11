@@ -112,13 +112,18 @@ def add_block_save(request):
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         block_name = request.POST.get('block_name').upper()
-        try:
-            block = Blocks.objects.create(block_name=block_name)
-            block.save()
-            messages.success(request, 'Block added successfully')
-            return HttpResponseRedirect(reverse('add_block'))
-        except:
-            messages.error(request,'Problem in block creation')
+        block_check = Blocks.objects.filter(block_name=block_name).exists()
+        if not block_check:
+            try:
+                block = Blocks.objects.create(block_name=block_name)
+                block.save()
+                messages.success(request, 'Block added successfully')
+                return HttpResponseRedirect(reverse('add_block'))
+            except:
+                messages.error(request,'Problem in block creation')
+                return HttpResponseRedirect(reverse('add_block'))
+        else:
+            messages.error(request,block_name+' exists, create new one')
             return HttpResponseRedirect(reverse('add_block'))
 
 def view_blocks(request):
