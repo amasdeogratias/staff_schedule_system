@@ -168,15 +168,21 @@ def add_office_save(request):
         block_name = request.POST.get('block_name')
         office_number = request.POST.get('office_number')
         block_obj = Blocks.objects.get(id=block_name) 
-
-        try:
-            office = Office.objects.create(office_number=office_number, block=block_obj)
-            office.save()
-            messages.success(request, 'Office no added successfully')
-            return HttpResponseRedirect(reverse('add_office'))
         
-        except:
-            messages.error(request, 'Problem in adding office no')
+        office_check = Office.objects.filter(block=block_obj, office_number=office_number)
+        
+        if not office_check.exists(): # if office not exists, create new one
+            try:
+                office = Office.objects.create(office_number=office_number, block=block_obj)
+                office.save()
+                messages.success(request, 'Office no added successfully')
+                return HttpResponseRedirect(reverse('add_office'))
+            
+            except:
+                messages.error(request, 'Problem in adding office no')
+                return HttpResponseRedirect(reverse('add_office'))
+        else:
+            messages.error(request, office_number +' Exists, create new one')
             return HttpResponseRedirect(reverse('add_office'))
         
 def edit_office(request,office_id):
