@@ -348,7 +348,8 @@ def edit_course_save(request):
 def edit_staff(request, staff_id):
     staff=Staffs.objects.get(admin=staff_id)
     departments = Department.objects.all()
-    context = {'staff':staff,'departments':departments}
+    offices = Office.objects.all()
+    context = {'staff':staff,'departments':departments, "offices":offices}
     return render(request,'main_app/admin/edit_staff.html', context)
 
 def edit_staff_save(request):
@@ -361,17 +362,21 @@ def edit_staff_save(request):
         email=request.POST.get("email")
         username=request.POST.get("username")
         address=request.POST.get("address")
+        office_id=request.POST.get("office_id")
+        
+        office = Office.objects.get(id=office_id)
+        
 
         try:
             user=CustomUser.objects.get(id=staff_id)
             user.first_name=first_name
             user.last_name=last_name
             user.email=email
-            user.username=username
             user.save()
 
             staff_model=Staffs.objects.get(admin=staff_id)
             staff_model.address=address
+            staff_model.office=office
             staff_model.save()
             messages.success(request,"Staff updated successfully")
             return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id}))
