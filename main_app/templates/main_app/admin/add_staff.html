@@ -64,7 +64,7 @@ Add Staff
                                     <label for="office">Office</label>
                                     <select name="office_number" id="office" class="form-control">
                                         {% for office in offices %}
-                                        <option value="{{office.id}}">{{office.office_number}}</option>
+                                        <option value="{{office.id}}">{{office.block.block_name}}/{{office.office_number}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
