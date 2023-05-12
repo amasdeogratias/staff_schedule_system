@@ -132,6 +132,26 @@ class Appointment(models.Model):
     
     class Meta:
         db_table = "appointments"
+        
+class NotificationStudent(models.Model):
+    id = models.AutoField(primary_key=True) 
+    student = models.ForeignKey(Students, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "student_notifications"
+        
+class NotificationStaff(models.Model):
+    id = models.AutoField(primary_key=True) 
+    staff = models.ForeignKey(Staffs, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "staff_notifications"
     
         
    
