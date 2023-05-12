@@ -56,6 +56,7 @@ def add_booking_save(request):
         return HttpResponse("<h2>Method not Allowed</h2>")
     else:
         staff_id = request.POST.get("staff_id")
+        appointment_reason = request.POST.get("reason").upper()
         appointment_date = request.POST.get("booking_date")
         appointment_time = request.POST.get("times")
         
@@ -68,7 +69,7 @@ def add_booking_save(request):
         
         try:
             appointment = Appointment.objects.create(
-            appointment_date=appointment_date, appointment_time=appointment_time,
+            reason= appointment_reason, appointment_date=appointment_date, appointment_time=appointment_time,
             staffId = staff_id, staff_name=staff.admin.first_name + ' ' +staff.admin.last_name, student = student_obj,status=0
             )
             appointment.save()

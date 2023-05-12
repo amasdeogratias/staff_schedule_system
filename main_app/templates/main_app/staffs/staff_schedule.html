@@ -42,7 +42,8 @@ Schedule Time Slots
 {% block custom_js %}
 <script>
      $("#slot_date").datepicker({
-            minDate:0
+            dateFormat: 'yy-mm-dd',
+            minDate:0,
         })
     $(document).ready(function(){
      $("#levels").change( function(){

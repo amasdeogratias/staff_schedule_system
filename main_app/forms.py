@@ -49,7 +49,7 @@ class AddTimeSlot(forms.Form):
     ("5 PM - 6 PM", "5 PM - 6 PM"),
 )
     Education_level = (
-        # ('Select Education level...', 'Select Education level...'),
+        ('Select Education level...', 'Select Education level...'),
         ('undergraduate', 'undergraduate'),
         ('postgraduate', 'postgraduate'),
     )
