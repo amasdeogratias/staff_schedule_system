@@ -126,6 +126,7 @@ class Appointment(models.Model):
     student=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     staff_name = models.CharField(max_length=40,null=True)
     status = models.IntegerField(default=0)
+    reason = models.CharField(max_length=255, default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     

@@ -5,6 +5,7 @@ from .models import Staffs, TimeSlot, Appointment,CustomUser, Students
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.urls import reverse
+from datetime import date
 
 #
 def student_panel(request):
@@ -19,7 +20,8 @@ def view_lectures(request):
 
 def add_appointment(request,staff_id):
     staff=Staffs.objects.get(admin=staff_id)
-    context = {'staff':staff}
+    todayDate = date.today().strftime('%Y-%m-%d')
+    context = {'staff':staff, "todayDate":todayDate}
     return render(request,'main_app/students/add_booking.html',context)
 
 @csrf_exempt
