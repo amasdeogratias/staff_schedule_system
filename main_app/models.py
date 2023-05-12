@@ -173,3 +173,10 @@ def save_user_profile(sender,instance,**kwargs):
         instance.staffs.save()
     if instance.user_type==3:
         instance.students.save()
+        
+@receiver(post_save,sender=Appointment)
+def appointment_accepted(sender,instance, created,**kwargs):
+    if created and instance.accepted:
+        recipient = instance.user
+        message = "Your appointment has been accepted."
+        notification = NotificationStudent.objects.create(student=recipient, message=message)
