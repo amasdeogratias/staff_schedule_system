@@ -31,6 +31,11 @@ TIME_CHOICES = (
     ("7:30 PM", "7:30 PM"),
 )
 
+Education_level = (
+        ('undergraduate', 'undergraduate'),
+        ('postgraduate', 'postgraduate'),
+    )
+
 class CustomUser(AbstractUser):
     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
@@ -95,6 +100,7 @@ class Students(models.Model):
     program=models.CharField(max_length=255,default='')
     gender=models.CharField(max_length=255)
     profile_pic=models.FileField()
+    level = models.CharField(max_length=255,default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
@@ -103,6 +109,7 @@ class TimeSlot(models.Model):
     staff=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     slot_date = models.DateField()
     time=models.CharField(max_length=10, choices=TIME_CHOICES,default="")
+    education_level = models.CharField(max_length=50, choices=Education_level, default="undergraduate")
     status = models.IntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -119,11 +126,32 @@ class Appointment(models.Model):
     student=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     staff_name = models.CharField(max_length=40,null=True)
     status = models.IntegerField(default=0)
+    reason = models.CharField(max_length=255, default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     
     class Meta:
         db_table = "appointments"
+        
+class NotificationStudent(models.Model):
+    id = models.AutoField(primary_key=True) 
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "student_notifications"
+        
+class NotificationStaff(models.Model):
+    id = models.AutoField(primary_key=True) 
+    staff = models.ForeignKey(Staffs, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "staff_notifications"
     
         
    
@@ -145,3 +173,10 @@ def save_user_profile(sender,instance,**kwargs):
         instance.staffs.save()
     if instance.user_type==3:
         instance.students.save()
+        
+# @receiver(post_save,sender=Appointment)
+# def appointment_accepted(sender,instance, created,**kwargs):
+#     if created and instance.accepted:
+#         student = 1
+#         message = "Your appointment has been accepted."
+#         notification = NotificationStudent.objects.create(student=student, message=message)

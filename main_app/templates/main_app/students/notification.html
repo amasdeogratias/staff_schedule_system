@@ -1,0 +1,20 @@
+{% load static %} 
+<ul class="navbar-nav ml-auto">
+    <!-- Notifications Dropdown Menu -->
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="{% url 'notifications' %}">
+        <i class="far fa-bell"></i>
+        <span class="badge badge-danger navbar-badge">{{ count_notifications }}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">{{ count_notifications }} Notifications</span>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          {% for notifcation in notifications %}
+          <span class="float-right text-muted text-sm">{{notification.message}}</span>
+          {% endfor %}
+        </a>
+       </div>
+    </li>
+    
+  </ul>

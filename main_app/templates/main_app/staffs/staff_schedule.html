@@ -38,3 +38,25 @@ Schedule Time Slots
 </section>
 <!-- /.content -->
 {% endblock main_content %}
+
+{% block custom_js %}
+<script>
+     $("#slot_date").datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate:0,
+        })
+    $(document).ready(function(){
+     $("#levels").change( function(){
+         if($(this).val() != "undergraduate"){
+            $('#under_graduate').attr('hidden',true);
+             $('#post_graduate').removeAttr("hidden");
+             
+         }else {
+            $('#under_graduate').removeAttr("hidden");
+             $('#post_graduate').attr('hidden',true);
+         }
+     });
+  }); 
+  </script>
+
+{% endblock custom_js %}

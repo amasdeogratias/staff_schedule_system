@@ -33,7 +33,35 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage Slots
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'create_schedule' as create_schedule %}
+                <a href="{% url 'create_schedule' %}" class="nav-link {% if request.path == create_schedule %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Add slots
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/view_slots" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    View slots
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
             {% url 'create_schedule' as create_schedule %}
             <a href="{% url 'create_schedule' %}" class="nav-link {% if request.path == create_schedule %} active {% endif %}">
               <i class="nav-icon fas fa-th"></i>
@@ -41,7 +69,7 @@
                 Schedule
               </p>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

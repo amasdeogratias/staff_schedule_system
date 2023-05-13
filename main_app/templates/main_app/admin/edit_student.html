@@ -13,6 +13,7 @@ Edit Student
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Edit Student</h3>
+                        <a href="{% url 'view_student' %}" class="btn btn-info" style="float: right;"><i class="fa fa-list">View student</i></a>
                         <div class="form-group col-md-6">
                             {% if messages %}
                                 {% for message in messages %}
@@ -49,8 +50,15 @@ Edit Student
                                     <input type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{student.admin.last_name}}" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" placeholder="Username" name="username" value="{{student.admin.username}}" required>
+                                    <label>Level</label>
+                                    <select class="form-control" name="level">
+                                        <option value="Undergraduate"{% if student.level == 'Undergraduate' %}
+                                          selected
+                                        {% endif %}>Undergraduate</option>
+                                        <option value="Postgraduate"{% if student.level == 'Postgraduate' %}
+                                          selected
+                                        {% endif %}>Postgraduate</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Program</label>

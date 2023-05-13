@@ -34,8 +34,12 @@ Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_na
                             <div class="row">
                                 <input type="hidden" name="staff_id" id="staff_id" value="{{staff.admin.id}}">                                
                                 <div class="form-group col-md-6">
+                                    <label>Appointment Reason</label>
+                                    <input type="text" class="form-control" id="reason" placeholder="Enter appointment reason" name="reason">
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label>Select Appointment Date</label>
-                                    <input type="text" class="form-control" id="booking_date" placeholder="Date" name="booking_date" data-toggle="datetimepicker">
+                                    <input type="text" class="form-control" id="booking_date" placeholder="Date" name="booking_date" value="{{todayDate}}" data-toggle="datetimepicker">
                                 </div>
                                 <div id="times" class="form-group col-md-6">
 
@@ -45,8 +49,8 @@ Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_na
                         </div>
                         <!-- /.card-body -->
 
-                        <div class="card-footer">
-                            <button type="submit" id="fetch_times" class="btn btn-primary btn-block">Make Appointment</button>
+                        <div class="form-group" style="float:right">
+                            <button type="submit" id="fetch_times" class="btn btn-success btn-group-sm">Make Appointment</button>
                         </div>
                     </form>
                 </div>
@@ -63,7 +67,7 @@ Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_na
         //date picker
         $( "#booking_date" ).datepicker({
             dateFormat: 'yy-mm-dd',
-            minDate: 0
+            minDate: 0,
         });
         //display time slot on date change
         $("#booking_date").change(function(){

@@ -112,13 +112,18 @@ def add_block_save(request):
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         block_name = request.POST.get('block_name').upper()
-        try:
-            block = Blocks.objects.create(block_name=block_name)
-            block.save()
-            messages.success(request, 'Block added successfully')
-            return HttpResponseRedirect(reverse('add_block'))
-        except:
-            messages.error(request,'Problem in block creation')
+        block_check = Blocks.objects.filter(block_name=block_name).exists()
+        if not block_check:
+            try:
+                block = Blocks.objects.create(block_name=block_name)
+                block.save()
+                messages.success(request, 'Block added successfully')
+                return HttpResponseRedirect(reverse('add_block'))
+            except:
+                messages.error(request,'Problem in block creation')
+                return HttpResponseRedirect(reverse('add_block'))
+        else:
+            messages.error(request,block_name+' exists, create new one')
             return HttpResponseRedirect(reverse('add_block'))
 
 def view_blocks(request):
@@ -163,15 +168,21 @@ def add_office_save(request):
         block_name = request.POST.get('block_name')
         office_number = request.POST.get('office_number')
         block_obj = Blocks.objects.get(id=block_name) 
-
-        try:
-            office = Office.objects.create(office_number=office_number, block=block_obj)
-            office.save()
-            messages.success(request, 'Office no added successfully')
-            return HttpResponseRedirect(reverse('add_office'))
         
-        except:
-            messages.error(request, 'Problem in adding office no')
+        office_check = Office.objects.filter(block=block_obj, office_number=office_number)
+        
+        if not office_check.exists(): # if office not exists, create new one
+            try:
+                office = Office.objects.create(office_number=office_number, block=block_obj)
+                office.save()
+                messages.success(request, 'Office no added successfully')
+                return HttpResponseRedirect(reverse('add_office'))
+            
+            except:
+                messages.error(request, 'Problem in adding office no')
+                return HttpResponseRedirect(reverse('add_office'))
+        else:
+            messages.error(request, office_number +' Exists, create new one')
             return HttpResponseRedirect(reverse('add_office'))
         
 def edit_office(request,office_id):
@@ -237,11 +248,12 @@ def add_student_save(request):
         student_id = request.POST.get('student_id')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
+        username = request.POST.get('student_id')
         email = request.POST.get('email')
         password = request.POST.get('password')
         program = request.POST.get('program') 
         gender = request.POST.get('gender') 
+        level = request.POST.get('level') 
          
         
         #create custom user object
@@ -251,6 +263,7 @@ def add_student_save(request):
             user.students.student_id=student_id
             user.students.program=program
             user.students.gender=gender
+            user.students.level=level
             user.save()
             messages.success(request, "Student added successfully...")
             return HttpResponseRedirect(reverse("add_student"))
@@ -335,7 +348,8 @@ def edit_course_save(request):
 def edit_staff(request, staff_id):
     staff=Staffs.objects.get(admin=staff_id)
     departments = Department.objects.all()
-    context = {'staff':staff,'departments':departments}
+    offices = Office.objects.all()
+    context = {'staff':staff,'departments':departments, "offices":offices}
     return render(request,'main_app/admin/edit_staff.html', context)
 
 def edit_staff_save(request):
@@ -348,17 +362,21 @@ def edit_staff_save(request):
         email=request.POST.get("email")
         username=request.POST.get("username")
         address=request.POST.get("address")
+        office_id=request.POST.get("office_id")
+        
+        office = Office.objects.get(id=office_id)
+        
 
         try:
             user=CustomUser.objects.get(id=staff_id)
             user.first_name=first_name
             user.last_name=last_name
             user.email=email
-            user.username=username
             user.save()
 
             staff_model=Staffs.objects.get(admin=staff_id)
             staff_model.address=address
+            staff_model.office=office
             staff_model.save()
             messages.success(request,"Staff updated successfully")
             return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id}))
@@ -379,9 +397,10 @@ def edit_student_save(request):
         first_name=request.POST.get("first_name")
         last_name=request.POST.get("last_name")
         email=request.POST.get("email")
-        username=request.POST.get("username")
+        username=request.POST.get("student_id")
         program=request.POST.get("program")
         gender=request.POST.get("gender")
+        level=request.POST.get("level")
 
         try:
             user=CustomUser.objects.get(id=stud_id)
@@ -394,6 +413,7 @@ def edit_student_save(request):
             student_model=Students.objects.get(admin=stud_id)
             student_model.program=program
             student_model.gender=gender
+            student_model.level=level
             student_model.save()
             messages.success(request,"Student updated successfully")
             return HttpResponseRedirect(reverse("edit_student",kwargs={"stud_id":stud_id}))

@@ -14,6 +14,7 @@ Staffs
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Staff Details</h3>
+              <a href="{% url 'add_staff' %}" class="btn btn-info" style="float: right;"><i class="fa fa-plus-circle">Add staff</i></a>
             </div><br>
             <!-- /.card-header -->
             <div class="card-body table-responsive">
@@ -21,11 +22,10 @@ Staffs
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>User Name</th>
+                    <th>Staff Name</th>
                     <th>Email</th>
                     <th>Address</th>
+                    <th>Office</th>
                     <th>Department</th>
                     <th>Action</th>
                   </tr>
@@ -34,11 +34,10 @@ Staffs
                 {% for staff in staffs %}
                   <tr>
                     <td>{{ staff.admin.id }}</td>
-                    <td>{{ staff.admin.first_name }}</td>
-                    <td>{{ staff.admin.last_name }}</td>
-                    <td>{{ staff.admin.username }}</td>
+                    <td>{{ staff.admin.first_name }} {{ staff.admin.last_name }}</td>
                     <td>{{ staff.admin.email }}</td>
                     <td>{{ staff.address }}</td>
+                    <td>{{ staff.office.block.block_name }} / {{ staff.office.office_number }}</td>
                     <td>{{ staff.department.department_name }}</td>
                     <td><a href="/edit_staff/{{ staff.admin.id }}" class="btn btn-success">Edit</a></td>
                   </tr>
