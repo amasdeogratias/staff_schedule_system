@@ -135,7 +135,7 @@ class Appointment(models.Model):
         
 class NotificationStudent(models.Model):
     id = models.AutoField(primary_key=True) 
-    student = models.ForeignKey(Students, on_delete=models.CASCADE)
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     message = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -174,9 +174,9 @@ def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==3:
         instance.students.save()
         
-@receiver(post_save,sender=Appointment)
-def appointment_accepted(sender,instance, created,**kwargs):
-    if created and instance.accepted:
-        recipient = instance.user
-        message = "Your appointment has been accepted."
-        notification = NotificationStudent.objects.create(student=recipient, message=message)
+# @receiver(post_save,sender=Appointment)
+# def appointment_accepted(sender,instance, created,**kwargs):
+#     if created and instance.accepted:
+#         student = 1
+#         message = "Your appointment has been accepted."
+#         notification = NotificationStudent.objects.create(student=student, message=message)
