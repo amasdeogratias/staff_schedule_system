@@ -30,6 +30,18 @@
 
   <!-- DataTables -->
   <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+  <style>
+    .notification-total {
+      display: block;
+    text-align: center;
+    color: #fff;
+    background-color: red;
+    width: 20px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 14px;
+    }
+  </style>
     {% block custom_css %}{% endblock custom_css %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -46,11 +58,7 @@
     <h4 style="margin-left: 10px;margin-top: 5px;">CMS | Student Panel</h4>
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="">
-          <i class="far fa-bell"></i>
-        </a>
-      </li>
+      {% include 'main_app/students/notification.html' with user=user id=id %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">
           Logout
