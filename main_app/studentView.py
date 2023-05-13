@@ -117,6 +117,5 @@ def notifications(request):
     # notifications.update(is_read=True)
     notify = {
         'notifications': notifications, 
-        'count_notifications':count_notifications
-        }
-    return render(request, 'main_app/students/notification.html', context=notify)
+        'count_notifications':count_notifications }
+    return render(request, 'main_app/students/notifications.html', context=notify)

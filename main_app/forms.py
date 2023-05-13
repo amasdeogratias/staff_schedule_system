@@ -76,6 +76,6 @@ class AddDepartment(forms.Form):
         existing_choices = dict(self.fields['department_name'].choices)
         # Check if the department name already exists in the choices
         if name in existing_choices:
-            raise ValidationError('This field already exists.')
+            raise forms.ValidationError('This field already exists.')
         return name
     
