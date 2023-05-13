@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from .models import Staffs, TimeSlot, Appointment,CustomUser, Students
+from .models import Staffs, TimeSlot, Appointment,CustomUser, Students, NotificationStudent
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.urls import reverse
@@ -107,3 +107,16 @@ def student_profile_save(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("student_profile"))
+        
+        
+def notifications(request):
+    user = request.user.id
+    # count unread notifications
+    count_notifications = NotificationStudent.objects.filter(student=user,is_read=False).count()
+    notifications = NotificationStudent.objects.filter(student=user).order_by('-created_at')
+    # notifications.update(is_read=True)
+    notify = {
+        'notifications': notifications, 
+        'count_notifications':count_notifications
+        }
+    return render(request, 'main_app/students/notification.html', context=notify)
