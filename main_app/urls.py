@@ -74,7 +74,7 @@ urlpatterns = [
     path('add_booking_save', studentView.add_booking_save, name='add_booking_save'),
     path('student_profile', studentView.student_profile, name='student_profile'),
     path('student_profile_save', studentView.student_profile_save, name='student_profile_save'),
-    path('notifications',studentView.notifications, name='notifications')
+    path('notifications',studentView.notifications, name='notifications'),
      
      
 ]

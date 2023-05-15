@@ -52,7 +52,7 @@ def add_staff_save(request):
     else: # process the form
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
+        username = request.POST.get('last_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
@@ -224,7 +224,7 @@ def add_course_save(request):
         return HttpResponse("<h2>Method not allowed</h2>")
     else:
         course_name = request.POST.get('course_name')
-        course_code = request.POST.get('course_code')
+        course_code = request.POST.get('course_code').upper()
         department_id = request.POST.get('department')
         department_obj = Department.objects.get(id=department_id)
         

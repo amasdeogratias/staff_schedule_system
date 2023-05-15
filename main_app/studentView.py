@@ -9,8 +9,18 @@ from datetime import date
 
 #
 def student_panel(request):
-    appointments = Appointment.objects.all()
-    context = {'appointments':appointments}
+    user = request.user.id # get user current login
+    appointments = Appointment.objects.filter(student=user)
+    # count unread notifications
+    count_notifications = NotificationStudent.objects.filter(student=user,is_read=False).count() #
+    notifications = NotificationStudent.objects.filter(student=user).order_by('-created_at')
+    notifications.update(is_read=True)
+
+    context = {
+        'appointments':appointments,
+        'count_notifications':count_notifications,
+        'notifications':notifications
+        }
     return render(request,"main_app/students/student_panel.html",context)
 
 def view_lectures(request):
@@ -113,13 +123,12 @@ def student_profile_save(request):
         
         
 def notifications(request):
-    user = request.user.id
+    user = request.user.id # get user current login
     # count unread notifications
-    count_notifications = NotificationStudent.objects.filter(student=user,is_read=False).count()
+    count_notifications = NotificationStudent.objects.filter(student=user,is_read=False).count() #
     notifications = NotificationStudent.objects.filter(student=user).order_by('-created_at')
-    # notifications.update(is_read=True)
+    notifications.update(is_read=True)
     notify = {
         'notifications': notifications, 
-        'count_notifications':count_notifications
-        }
-    return render(request, 'main_app/students/notification.html', context=notify)
+        'count_notifications':count_notifications }
+    return render(request, 'main_app/students/notifications.html', context=notify)

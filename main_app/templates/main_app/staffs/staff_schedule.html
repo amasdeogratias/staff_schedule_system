@@ -48,12 +48,12 @@ Schedule Time Slots
     $(document).ready(function(){
      $("#levels").change( function(){
          if($(this).val() != "undergraduate"){
-            $('#under_graduate').attr('hidden',true);
+            $('#under_graduate').remove();
              $('#post_graduate').removeAttr("hidden");
              
          }else {
             $('#under_graduate').removeAttr("hidden");
-             $('#post_graduate').attr('hidden',true);
+             $('#post_graduate').remove();
          }
      });
   }); 
