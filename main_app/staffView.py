@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from .forms import AddTimeSlot
-from .models import TimeSlot, CustomUser, Appointment, Staffs,NotificationStudent
+from .models import TimeSlot, CustomUser, Appointment, Staffs,NotificationStudent,NotificationStaff
 from django.contrib import messages
 from django.urls import reverse
 from datetime import date
@@ -15,9 +15,15 @@ from schoo_demo.settings import EMAIL_HOST_USER
 def staff_panel(request):
     todayAppointments = Appointment.objects.filter(staffId = request.user.id,appointment_date = date.today()).count()
     appointmentcount=Appointment.objects.filter(staffId = request.user.id).count()
+     # count unread notifications
+    count_notifications = NotificationStaff.objects.filter(staff=request.user.id,is_read=False).count() #
+    notifications = NotificationStaff.objects.filter(staff=request.user.id).order_by('-created_at')
+    notifications.update(is_read=True)
     context = {
             'appointmentcount':appointmentcount,
-            'todayAppointments':todayAppointments
+            'todayAppointments':todayAppointments,
+            'count_notifications':count_notifications,
+            'notifications':notifications,
             }
     return render(request,"main_app/staffs/staff_panel.html", context)
 

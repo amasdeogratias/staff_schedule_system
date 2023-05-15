@@ -75,6 +75,8 @@ def add_booking_save(request):
         staff = Staffs.objects.get(admin = staff_id)
         # return HttpResponse(staff.admin.first_name + ' ' + staff.admin.last_name)
         
+        lecture_id = CustomUser.objects.get(id=staff_id) # compare id with customuser
+        
         
         
         try:
@@ -89,7 +91,7 @@ def add_booking_save(request):
             time_slot_status = TimeSlot.objects.get(slot_date=appointment_date,time=appointment_time)
             time_slot_status.status = 1
             time_slot_status.save()
-            NotificationStaff.objects.create(message="Appointment Accepted", staff=staff_id, is_read=False)
+            NotificationStaff.objects.create(message="There is new Appointment", staff=lecture_id, is_read=False)
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
         except:
