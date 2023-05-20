@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from .models import Staffs, TimeSlot, Appointment,CustomUser, Students, NotificationStudent
+from .models import Staffs, TimeSlot, Appointment,CustomUser, Students, NotificationStudent,NotificationStaff
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.urls import reverse
@@ -75,18 +75,23 @@ def add_booking_save(request):
         staff = Staffs.objects.get(admin = staff_id)
         # return HttpResponse(staff.admin.first_name + ' ' + staff.admin.last_name)
         
+        lecture_id = CustomUser.objects.get(id=staff_id) # compare id with customuser
+        
         
         
         try:
             appointment = Appointment.objects.create(
             reason= appointment_reason, appointment_date=appointment_date, appointment_time=appointment_time,
-            staffId = staff_id, staff_name=staff.admin.first_name + ' ' +staff.admin.last_name, student = student_obj,status=0
+            staffId = staff_id, 
+            staff_name=staff.admin.first_name + ' ' +staff.admin.last_name, 
+            student = student_obj,status=0
             )
             appointment.save()
             
             time_slot_status = TimeSlot.objects.get(slot_date=appointment_date,time=appointment_time)
             time_slot_status.status = 1
             time_slot_status.save()
+            NotificationStaff.objects.create(message="There is new Appointment", staff=lecture_id, is_read=False)
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
         except:

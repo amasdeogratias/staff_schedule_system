@@ -145,7 +145,7 @@ class NotificationStudent(models.Model):
         
 class NotificationStaff(models.Model):
     id = models.AutoField(primary_key=True) 
-    staff = models.ForeignKey(Staffs, on_delete=models.CASCADE)
+    staff = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     message = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
