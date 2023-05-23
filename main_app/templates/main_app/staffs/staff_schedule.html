@@ -45,18 +45,57 @@ Schedule Time Slots
             dateFormat: 'yy-mm-dd',
             minDate:0,
         })
-    $(document).ready(function(){
+    {% comment %} $(document).ready(function(){
      $("#levels").change( function(){
-         if($(this).val() != "undergraduate"){
-            $('#under_graduate').remove();
-             $('#post_graduate').removeAttr("hidden");
-             
-         }else {
+        var selectOpt = $(this).val();
+        
+         if(selectOpt == "undergraduate"){
             $('#under_graduate').removeAttr("hidden");
              $('#post_graduate').remove();
+             
+         }else if(selectOpt == "postgraduate"){
+            $('#under_graduate').remove();
+            $('#post_graduate').removeAttr("hidden");
+         }else {
+            $('#under_graduate').remove();
+             $('#post_graduate').remove();
+             $("#Save").css("disabled")
          }
      });
-  }); 
+  });  {% endcomment %}
+  document.addEventListener("DOMContentLoaded", function(){
+    var educationLevel = document.getElementById("levels");
+    var undergraduateLevel = document.getElementById("under_graduate");
+    var postgraduateLevel = document.getElementById("post_graduate");
+    
+    undergraduateLevel.style.display = "none";
+    postgraduateLevel.style.display = "none";
+    
+    educationLevel.addEventListener('change', function(){
+        var selectedOption = educationLevel.value;
+        
+        if(selectedOption == "undergraduate"){
+            undergraduateLevel.required = true;
+            undergraduateLevel.style.display = "block";
+            postgraduateLevel.style.display = "none";
+            
+            
+            
+        }else if(selectedOption == "postgraduate"){
+            undergraduateLevel.style.display = "none";
+            postgraduateLevel.required = true;
+            postgraduateLevel.style.display = "block";
+            
+            
+        }else{
+            undergraduateLevel.style.display = "none";
+            postgraduateLevel.style.display = "none";
+            undergraduateLevel.required = true;
+            postgraduateLevel.required = true;
+        }
+        
+    })
+  });
   </script>
 
 {% endblock custom_js %}
