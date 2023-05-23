@@ -44,19 +44,36 @@ Schedule Time Slots
      $("#slot_date").datepicker({
             dateFormat: 'yy-mm-dd',
             minDate:0,
+<<<<<<< HEAD
         })
-    $(document).ready(function(){
-     $("#levels").change( function(){
-         if($(this).val() != "undergraduate"){
-            $('#under_graduate').remove();
-             $('#post_graduate').removeAttr("hidden");
-             
-         }else {
-            $('#under_graduate').removeAttr("hidden");
-             $('#post_graduate').remove();
-         }
-     });
-  }); 
+ 
+
+  document.addEventListener("DOMContentLoaded", function(){
+    var undergraduateLevel = document.getElementById("under_graduate");
+    var postgraduateLevel = document.getElementById("post_graduate");
+
+            undergraduateLevel.style.display = "none";
+            postgraduateLevel.style.display = "none";
+        
+
+    var selectedLevel = document.getElementById("levels");
+
+    selectedLevel.addEventListener("change", function(){
+        selectOption = selectedLevel.value;
+        if(selectOption == "undergraduate"){
+            undergraduateLevel.style.display = "block";
+            postgraduateLevel.style.display = "none";
+
+        }else if(selectOption == "postgraduate"){
+            undergraduateLevel.style.display = "none";
+            postgraduateLevel.style.display = "block";
+        }else{
+            undergraduateLevel.style.display = "none";
+            postgraduateLevel.style.display = "none";
+        }
+    });
+>>>>>>> ade9ea42dca83b06fad483865604b865aa5fce23
+  });
   </script>
 
 {% endblock custom_js %}
