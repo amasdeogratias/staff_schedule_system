@@ -46,7 +46,12 @@ def add_slots_save(request):
             
             try:
                 staff = CustomUser.objects.get(id=request.user.id)
-                timeslot = TimeSlot.objects.create(slot_date = slot_date, time = undergraduate_time or postgraduate_time, education_level=education_level, staff = staff)
+                if education_level == "undergraduate":
+                    timeslot = TimeSlot.objects.create(slot_date = slot_date, time = undergraduate_time, education_level=education_level, staff = staff)
+                elif education_level == "postgraduate":
+                    timeslot = TimeSlot.objects.create(slot_date = slot_date, time = postgraduate_time, education_level=education_level, staff = staff)
+                else:
+                    messages.error(request, 'No education level selected')
                 timeslot.save()
                 messages.success(request, 'Time slots added successfully')
                 return HttpResponseRedirect(reverse('create_schedule'))

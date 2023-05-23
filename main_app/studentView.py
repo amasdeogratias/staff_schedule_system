@@ -6,8 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.decorators import login_required
 
 #
+@login_required
 def student_panel(request):
     user = request.user.id # get user current login
     appointments = Appointment.objects.filter(student=user)

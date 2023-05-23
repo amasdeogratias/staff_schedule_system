@@ -35,7 +35,13 @@ Book Appointment For: |  <label class="label label-info">{{ staff.admin.first_na
                                 <input type="hidden" name="staff_id" id="staff_id" value="{{staff.admin.id}}">                                
                                 <div class="form-group col-md-6">
                                     <label>Appointment Reason</label>
-                                    <input type="text" class="form-control" id="reason" placeholder="Enter appointment reason" name="reason" required>
+                                    <select class="form-control" name="reason" id="reason">
+                                        <option select disabled value="">Select Reason For appointment</option>
+                                        <option value="Final Year Project">Final Year Project</option>
+                                        <option value="Education Consultation">Education Consultation</option>
+                                        <option value="Research">Research</option>
+                                    </select>
+                                    
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Select Appointment Date</label>
