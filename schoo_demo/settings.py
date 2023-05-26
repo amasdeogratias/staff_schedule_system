@@ -141,8 +141,8 @@ AUTHENTICATION_BACKENDS=['main_app.EmailBackEnd.EmailBackEnd']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'system@globalsoftwares.net'
-EMAIL_HOST_PASSWORD = 'Admin@365'
+EMAIL_HOST_USER = 'kassimuabdallah22@gmail.com'
+EMAIL_HOST_PASSWORD = 'pbbftibddqarcukz'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL='cms udsm'
 

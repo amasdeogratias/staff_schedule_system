@@ -1,7 +1,7 @@
 from django import forms
 from .models import Department
 from django.core.exceptions import ValidationError
-from datetime import date
+from datetime import date,datetime
 
 #
 class DateInput(forms.DateInput):
@@ -55,13 +55,37 @@ class AddTimeSlot(forms.Form):
     )
     slot_date=forms.CharField(label="Date", widget=forms.TextInput(attrs={"class":"form-control","id":"slot_date","value":date.today()}))
     education_level=forms.ChoiceField(label="Education Level", choices=Education_level, widget=forms.Select(attrs={"class":"form-control","id":"levels"}))
-    undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate","hidden":"hidden"}))
-    postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate","hidden":"hidden"}))
+    undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate"}))
+    postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate"}))
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # super(AddTimeSlot, self).__init__(*args, **kwargs)
+        # self.fields['undergraduate_time'].choices = self.filter_time_choices()
         self.fields['undergraduate_time'].required = False
         self.fields['postgraduate_time'].required = False
+        
+    # def filter_time_choices(self):
+    #     current_time_with_min = datetime.now().strftime("%I:%M %p")  # Get current time
+    #     current_time_no_min = datetime.now().strftime("%I %p")  # Get current time
+    #     # current_time_obj_alt_format = datetime.strptime(current_time, "%I %p")
+        
+        
+    #     return [
+    #         (value, label) 
+    #         for value, label in self.TIME_CHOICES 
+    #         if (
+    #             datetime.strptime(value, "%I:%M %p") >= current_time_with_min 
+    #         ) or 
+    #         (value, label) 
+    #         for value, label in self.TIME_CHOICES 
+    #         if (
+                
+    #             datetime.strptime(value, "%I %p") >= current_time_no_min
+    #         )
+    #     ]
+        #return [(value, label) for value, label in self.TIME_CHOICES if datetime.strptime(value, "%I %p") >= current_time_obj]
+        
     
 class AddDepartment(forms.Form):
     Department_Choices = (

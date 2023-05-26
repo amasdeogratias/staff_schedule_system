@@ -17,13 +17,18 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import (
+    PasswordResetView, 
+    PasswordResetDoneView, 
+    PasswordResetConfirmView,
+    PasswordResetCompleteView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('reset_password/', auth_views.PasswordResetView.as_view(), name='reset_password'),
-    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset_password/', PasswordResetView.as_view(template_name='main_app/users/password_reset.html'), name='reset_password'),
+    path('reset_password_sent/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password_complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('', include('main_app.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
