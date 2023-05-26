@@ -139,7 +139,7 @@ AUTH_USER_MODEL = "main_app.CustomUser"
 AUTHENTICATION_BACKENDS=['main_app.EmailBackEnd.EmailBackEnd']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'kassimuabdallah22@gmail.com'
 EMAIL_HOST_PASSWORD = 'pbbftibddqarcukz'
