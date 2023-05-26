@@ -15,6 +15,7 @@ from schoo_demo.settings import EMAIL_HOST_USER
 def staff_panel(request):
     todayAppointments = Appointment.objects.filter(staffId = request.user.id,appointment_date = date.today()).count()
     appointmentcount=Appointment.objects.filter(staffId = request.user.id).count()
+    newAppointments = Appointment.objects.filter(status=0).count()
      # count unread notifications
     count_notifications = NotificationStaff.objects.filter(staff=request.user.id,is_read=False).count() #
     notifications = NotificationStaff.objects.filter(staff=request.user.id).order_by('-created_at')
@@ -22,10 +23,16 @@ def staff_panel(request):
     context = {
             'appointmentcount':appointmentcount,
             'todayAppointments':todayAppointments,
+            'newAppointments':newAppointments,
             'count_notifications':count_notifications,
             'notifications':notifications,
             }
     return render(request,"main_app/staffs/staff_panel.html", context)
+
+# show unprocessed appointments
+def newAppointments(request):
+    new_appointments = Appointment.objects.filter(status=0)
+    return render(request, 'main_app/staffs/new_appointment.html', {"new_appointments":new_appointments})
 
 def create_schedule(request):
     form = AddTimeSlot()
