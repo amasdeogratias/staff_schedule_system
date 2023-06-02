@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.urls import reverse
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+from PIL import Image
 
 #
 @login_required
@@ -109,13 +111,25 @@ def student_profile_save(request):
     if request.method != 'POST':
         return HttpResponseRedirect(reverse('student_profile'))
     else:
+        profile_pic = request.FILES['profile_pic']
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password=request.POST.get("password")
+        
+    
         try:
+            # fs=FileSystemStorage()
+            # filename = fs.save(profile_pic.name, profile_pic)
+            # profile_pic_url = fs.url(filename)
+            # image = Image.open(fs.path(filename))
+
+            # # Save the processed image
+            # image.save(fs.path(filename))
+            
             customuser = CustomUser.objects.get(id=request.user.id)
             customuser.first_name = first_name
             customuser.last_name = last_name
+            customuser.profile_pic = profile_pic
             if password != None and password != '':
                 customuser.set_password(password)
             customuser.save()

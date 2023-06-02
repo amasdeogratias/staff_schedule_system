@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from  django.db.models.signals import post_save
 from django.dispatch import receiver
+from PIL import Image
 
 # Create your models here.
 TIME_CHOICES = (
@@ -39,6 +40,18 @@ Education_level = (
 class CustomUser(AbstractUser):
     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
+    profile_pic=models.ImageField(default="", upload_to='profile_images/')
+    
+    # def save(self):
+    #     super().save()
+
+    #     img = Image.open(self.profile_pic.path) # Open image
+
+    #     # resize image
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size) # Resize image
+    #         img.save(self.profile_pic.path)
     
 class AdminHOD(models.Model):
     id=models.AutoField(primary_key=True)
@@ -99,10 +112,11 @@ class Students(models.Model):
     student_id=models.CharField(max_length=255, unique=True, blank=False)
     program=models.CharField(max_length=255,default='')
     gender=models.CharField(max_length=255)
-    profile_pic=models.FileField()
     level = models.CharField(max_length=255,default="")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
+    
+    
     
     
 class TimeSlot(models.Model):
@@ -163,7 +177,7 @@ def create_user_profile(sender,instance,created,**kwargs):
         if instance.user_type == 2:
             Staffs.objects.create(admin=instance,address="", department=Department.objects.get(id=1),office=Office.objects.get(id=1))
         if instance.user_type == 3:
-            Students.objects.create(admin=instance,profile_pic="")
+            Students.objects.create(admin=instance)
 
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
