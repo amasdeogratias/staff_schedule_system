@@ -1,14 +1,22 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
+from django.conf import settings
 
 
 class LoginCheckMiddleWare(MiddlewareMixin):
 
     def process_view(self,request,view_func,view_args,view_kwargs):
         modulename=view_func.__module__
-        user=request.user    
-        if user.is_authenticated: 
+        user=request.user
+        if user == "AnonymousUser":
+            profile_pic_url = user.profile_pic.url
+            if profile_pic_url.startswith(settings.MEDIA_URL):
+                return None  
+        if user.is_authenticated:
+            profile_pic_url=user.profile_pic.url
+            if profile_pic_url.startswith(settings.MEDIA_URL):
+                return None
             if user.user_type == "1":
                 if modulename == "main_app.adminView":
                     pass
