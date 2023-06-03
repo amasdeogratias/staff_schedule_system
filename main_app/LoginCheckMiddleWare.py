@@ -12,7 +12,16 @@ class LoginCheckMiddleWare(MiddlewareMixin):
         if user == "AnonymousUser":
             profile_pic_url = user.profile_pic.url
             if profile_pic_url.startswith(settings.MEDIA_URL):
-                return None  
+                return None 
+        if hasattr(user, 'profile_pic') and user.profile_pic:
+            profile_pic_url = user.profile_pic.url
+
+            if not profile_pic_url.startswith(settings.MEDIA_URL):
+                # If the profile_pic URL is not valid, continue processing
+                return None
+        else:
+            # If the user has no profile_pic or the profile_pic attribute is not present, continue processing
+            return None
         if user.is_authenticated:
             profile_pic_url=user.profile_pic.url
             if profile_pic_url.startswith(settings.MEDIA_URL):

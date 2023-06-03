@@ -7,13 +7,15 @@ from django.urls import reverse
 from datetime import date
 from django.core.mail import send_mail
 from schoo_demo.settings import EMAIL_HOST_USER
+from PIL import Image
 # from main_app.signals import appointment_accepted
 
 
 #
 
 def staff_panel(request):
-    todayAppointments = Appointment.objects.filter(staffId = request.user.id,appointment_date = date.today()).count()
+    user = request.user.id
+    todayAppointments = Appointment.objects.filter(staffId = user,appointment_date = date.today()).count()
     appointmentcount=Appointment.objects.filter(staffId = request.user.id).count()
     newAppointments = Appointment.objects.filter(status=0).count()
      # count unread notifications
@@ -111,6 +113,7 @@ def staff_profile_save(request):
     if request.method != 'POST':
         return HttpResponseRedirect(reverse('staff_profile'))
     else:
+        profile_pic = request.FILES['profile_pic']
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password=request.POST.get("password")
@@ -118,6 +121,7 @@ def staff_profile_save(request):
             customuser = CustomUser.objects.get(id=request.user.id)
             customuser.first_name = first_name
             customuser.last_name = last_name
+            customuser.profile_pic = profile_pic
             if password != None and password != '':
                 customuser.set_password(password)
             customuser.save()
