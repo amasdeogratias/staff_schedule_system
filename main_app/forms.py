@@ -10,29 +10,29 @@ class DateInput(forms.DateInput):
     
 class AddTimeSlot(forms.Form):
     TIME_CHOICES = (
-    ("8 AM", "8 AM"),
+    ("8:00 AM", "8:00 AM"),
     ("8:30 AM", "8:30 AM"),
-    ("9 AM", "9 AM"),
+    ("9:00 AM", "9:00 AM"),
     ("9:30 AM", "9:30 AM"),
-    ("10 AM", "10 AM"),
+    ("10:00 AM", "10:00 AM"),
     ("10:30 AM", "10:30 AM"),
-    ("11 AM", "11 AM"),
+    ("11:00 AM", "11:00 AM"),
     ("11:30 AM", "11:30 AM"),
-    ("12 PM", "12 PM"),
+    ("12:00 PM", "12:00 PM"),
     ("12:30 PM", "12:30 PM"),
-    ("1 PM", "1 PM"),
+    ("1:00 PM", "1:00 PM"),
     ("1:30 PM", "1:30 PM"),
-    ("2 PM", "2 PM"),
+    ("2:00 PM", "2:00 PM"),
     ("2:30 PM", "2:30 PM"),
-    ("3 PM", "3 PM"),
+    ("3:00 PM", "3:00 PM"),
     ("3:30 PM", "3:30 PM"),
-    ("4 PM", "4 PM"),
+    ("4:00 PM", "4:00 PM"),
     ("4:30 PM", "4:30 PM"),
-    ("5 PM", "5 PM"),
+    ("5:00 PM", "5:00 PM"),
     ("5:30 PM", "5:30 PM"),
-    ("6 PM", "6 PM"),
+    ("6:00 PM", "6:00 PM"),
     ("6:30 PM", "6:30 PM"),
-    ("7 PM", "7 PM"),
+    ("7:00 PM", "7:00 PM"),
     ("7:30 PM", "7:30 PM"),
     )
     
@@ -60,31 +60,27 @@ class AddTimeSlot(forms.Form):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # super(AddTimeSlot, self).__init__(*args, **kwargs)
-        # self.fields['undergraduate_time'].choices = self.filter_time_choices()
+        super(AddTimeSlot, self).__init__(*args, **kwargs)
+        self.fields['undergraduate_time'].choices = self.filter_time_choices()
         self.fields['undergraduate_time'].required = False
         self.fields['postgraduate_time'].required = False
         
-    # def filter_time_choices(self):
-    #     current_time_with_min = datetime.now().strftime("%I:%M %p")  # Get current time
-    #     current_time_no_min = datetime.now().strftime("%I %p")  # Get current time
-    #     # current_time_obj_alt_format = datetime.strptime(current_time, "%I %p")
+    def filter_time_choices(self):
+        current_time_with_min = datetime.now().strftime("%I:%M %p")  # Get current time
+        # current_time_no_min = datetime.now().strftime("%I %p")  # Get current time
+        current_time_obj_with_min = datetime.strptime(current_time_with_min, "%I:%M %p")
+        # current_time_obj_no_min = datetime.strptime(current_time_no_min, "%I %p")
         
         
-    #     return [
-    #         (value, label) 
-    #         for value, label in self.TIME_CHOICES 
-    #         if (
-    #             datetime.strptime(value, "%I:%M %p") >= current_time_with_min 
-    #         ) or 
-    #         (value, label) 
-    #         for value, label in self.TIME_CHOICES 
-    #         if (
-                
-    #             datetime.strptime(value, "%I %p") >= current_time_no_min
-    #         )
-    #     ]
-        #return [(value, label) for value, label in self.TIME_CHOICES if datetime.strptime(value, "%I %p") >= current_time_obj]
+        return [
+            (value, label) 
+            for value, label in self.TIME_CHOICES 
+            if (
+                datetime.strptime(value, "%I:%M %p") >=  current_time_obj_with_min 
+            )
+           
+        ]
+       
         
     
 class AddDepartment(forms.Form):
