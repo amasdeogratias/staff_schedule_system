@@ -9,6 +9,8 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from PIL import Image
+from django.core.mail import send_mail
+from schoo_demo.settings import EMAIL_HOST_USER
 
 #
 @login_required
@@ -77,11 +79,13 @@ def add_booking_save(request):
         student_obj = CustomUser.objects.get(id = request.user.id)
 
         staff = Staffs.objects.get(admin = staff_id)
-        # return HttpResponse(staff.admin.first_name + ' ' + staff.admin.last_name)
+        
+        # return HttpResponse(student_obj.first_name + ' ' + student_obj.last_name)
         
         lecture_id = CustomUser.objects.get(id=staff_id) # compare id with customuser
         
-        
+        staff_email = staff.admin.email
+        appointment_details = f'Student Name: {student_obj.first_name + " " + student_obj.last_name}, \nAppointment Reason:{appointment_reason} \nAppointment time:{appointment_date, appointment_time}'
         
         try:
             appointment = Appointment.objects.create(
@@ -96,6 +100,7 @@ def add_booking_save(request):
             time_slot_status.status = 1
             time_slot_status.save()
             NotificationStaff.objects.create(message="There is new Appointment", staff=lecture_id, is_read=False)
+            send_appointment_booked_email(staff_email, appointment_details)
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))
         except:
@@ -138,7 +143,13 @@ def student_profile_save(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("student_profile"))
-        
+  
+def send_appointment_booked_email(staff_email, appointment_details):
+    subject = 'New Appointment'
+    message = f'Hi, you have received new appointment, Here are the details:\n\n{appointment_details}'
+    from_email = EMAIL_HOST_USER 
+    recipient_list = [staff_email]
+    send_mail(subject, message, from_email, recipient_list)      
         
 def notifications(request):
     user = request.user.id # get user current login
