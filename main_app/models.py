@@ -42,16 +42,16 @@ class CustomUser(AbstractUser):
     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
     profile_pic=models.ImageField(default="", upload_to='profile_images/')
     
-    # def save(self):
-    #     super().save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-    #     img = Image.open(self.profile_pic.path) # Open image
+        img = Image.open(self.profile_pic.path) # Open image
 
-    #     # resize image
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size) # Resize image
-    #         img.save(self.profile_pic.path)
+        # resize image
+        if img.height < 300 and img.width < 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size) # Resize image
+            img.save(self.profile_pic.path)
     
 class AdminHOD(models.Model):
     id=models.AutoField(primary_key=True)
