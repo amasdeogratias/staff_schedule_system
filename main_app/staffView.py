@@ -8,7 +8,9 @@ from datetime import date
 from django.core.mail import send_mail
 from schoo_demo.settings import EMAIL_HOST_USER
 from PIL import Image
-# from main_app.signals import appointment_accepted
+from datetime import datetime,date
+
+
 
 
 #
@@ -99,9 +101,14 @@ def approve_appointment(request,appointment_id):
 def reject_appointment(request, appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
     student_id = CustomUser.objects.get(id=appointment.student.id) # compare id with customuser
+    
+    student_email = student_id.email
+    appointment_details = f'Lecture Name: {appointment.staff_name}, \nAppointment Reason:{appointment.reason} \nAppointment time:{appointment.appointment_date, appointment.appointment_time}'
+    
     appointment.status = 2
     appointment.save()
     NotificationStudent.objects.create(message="Appointment Rejected", student=student_id, is_read=False)
+    send_appointment_rejected_email(student_email, appointment_details)
     return HttpResponseRedirect(reverse('appointments'))
 
 def staff_profile(request):
@@ -138,3 +145,9 @@ def send_appointment_accepted_email(student_email, appointment_details):
     recipient_list = [student_email]
     send_mail(subject, message, from_email, recipient_list)
     
+def send_appointment_rejected_email(student_email, appointment_details):
+    subject = 'Appointment Accepted'
+    message = f'Hi, your appointment has been rejected. Here are the details:\n\n{appointment_details}'
+    from_email = EMAIL_HOST_USER 
+    recipient_list = [student_email]
+    send_mail(subject, message, from_email, recipient_list)

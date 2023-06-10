@@ -40,18 +40,7 @@ Education_level = (
 class CustomUser(AbstractUser):
     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
-    profile_pic=models.ImageField(default="", upload_to='profile_images/')
-    
-    # def save(self):
-    #     super().save()
-
-    #     img = Image.open(self.profile_pic.path) # Open image
-
-    #     # resize image
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size) # Resize image
-    #         img.save(self.profile_pic.path)
+    profile_pic=models.ImageField(default="demo.png", upload_to='profile_images/')
     
 class AdminHOD(models.Model):
     id=models.AutoField(primary_key=True)
