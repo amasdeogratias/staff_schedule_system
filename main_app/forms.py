@@ -1,5 +1,5 @@
 from django import forms
-from .models import Department
+from .models import Department,TimeSlot
 from django.core.exceptions import ValidationError
 from datetime import date,datetime
 
@@ -58,28 +58,42 @@ class AddTimeSlot(forms.Form):
     undergraduate_time=forms.ChoiceField(label="Undergraduate Time Slot", choices=TIME_CHOICES, widget=forms.Select(attrs={"class":"form-control", "id":"under_graduate"}))
     postgraduate_time=forms.ChoiceField(label="Postgraduate Time Slot", choices=POST_GRADUATE_TIME, widget=forms.Select(attrs={"class":"form-control",  "id":"post_graduate"}))
     
+    
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         super(AddTimeSlot, self).__init__(*args, **kwargs)
-        self.fields['undergraduate_time'].choices = self.filter_time_choices()
+        # self.fields['undergraduate_time'].choices = self.filter_time_choices()
         self.fields['undergraduate_time'].required = False
         self.fields['postgraduate_time'].required = False
         
-    def filter_time_choices(self):
-        current_time_with_min = datetime.now().strftime("%I:%M %p")  # Get current time
-        # current_time_no_min = datetime.now().strftime("%I %p")  # Get current time
-        current_time_obj_with_min = datetime.strptime(current_time_with_min, "%I:%M %p")
-        # current_time_obj_no_min = datetime.strptime(current_time_no_min, "%I %p")
+    # def filter_time_choices(self):
+    #     current_time_with_min = datetime.now().strftime("%I:%M %p")  # Get current time
+    #     # current_time_no_min = datetime.now().strftime("%I %p")  # Get current time
+    #     current_time_obj_with_min = datetime.strptime(current_time_with_min, "%I:%M %p")
+    #     # current_time_obj_no_min = datetime.strptime(current_time_no_min, "%I %p")
         
         
-        return [
-            (value, label) 
-            for value, label in self.TIME_CHOICES 
-            if (
-                datetime.strptime(value, "%I:%M %p") >=  current_time_obj_with_min 
-            )
+    #     return [
+    #         (value, label) 
+    #         for value, label in self.TIME_CHOICES 
+    #         if (
+    #             datetime.strptime(value, "%I:%M %p") >=  current_time_obj_with_min 
+    #         )
            
-        ]
+    #     ]
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     date = cleaned_data.get('slot_date')
+    #     timeslot = cleaned_data.get('undergraduate_time')
+
+    #     # Check for existing timeslots with the same date and timeslot
+    #     if date and timeslot:
+    #         existing_timeslots = TimeSlot.objects.filter(slot_date=date, time=timeslot)
+    #         if existing_timeslots.exists():
+    #             raise forms.ValidationError('This timeslot is already taken for the selected date.')
+
+    #     return cleaned_data
        
         
     

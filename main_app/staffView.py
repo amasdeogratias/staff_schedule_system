@@ -53,22 +53,28 @@ def add_slots_save(request):
             postgraduate_time = form.cleaned_data["postgraduate_time"]
             education_level = form.cleaned_data["education_level"]
             
-            
-            
-            try:
-                staff = CustomUser.objects.get(id=request.user.id)
-                if education_level == "undergraduate":
-                    timeslot = TimeSlot.objects.create(slot_date = slot_date, time = undergraduate_time, education_level=education_level, staff = staff)
-                elif education_level == "postgraduate":
-                    timeslot = TimeSlot.objects.create(slot_date = slot_date, time = postgraduate_time, education_level=education_level, staff = staff)
+            if slot_date and undergraduate_time:
+                existing_timeslots = TimeSlot.objects.filter(slot_date=slot_date, time=undergraduate_time)
+                if existing_timeslots.exists():
+                    messages.error(request, 'This timeslot is already taken for the selected date.')
+                    return HttpResponseRedirect(reverse('create_schedule'))
                 else:
-                    messages.error(request, 'No education level selected')
-                timeslot.save()
-                messages.success(request, 'Time slots added successfully')
-                return HttpResponseRedirect(reverse('create_schedule'))
-            except:
-                messages.error(request, 'Problem occuered in creating time slots')
-                return HttpResponseRedirect(reverse('create_schedule'))
+            
+
+                    try:
+                        staff = CustomUser.objects.get(id=request.user.id)
+                        if education_level == "undergraduate":
+                            timeslot = TimeSlot.objects.create(slot_date = slot_date, time = undergraduate_time, education_level=education_level, staff = staff)
+                        elif education_level == "postgraduate":
+                            timeslot = TimeSlot.objects.create(slot_date = slot_date, time = postgraduate_time, education_level=education_level, staff = staff)
+                        else:
+                            messages.error(request, 'No education level selected')
+                        timeslot.save()
+                        messages.success(request, 'Time slots added successfully')
+                        return HttpResponseRedirect(reverse('create_schedule'))
+                    except:
+                        messages.error(request, 'Problem occurred in creating time slots')
+                        return HttpResponseRedirect(reverse('create_schedule'))
         else:
             form=AddTimeSlot(request.POST)
             return render(request, "main_app/staffs/staff_schedule.html", {"form": form})
