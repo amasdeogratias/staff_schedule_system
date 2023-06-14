@@ -67,6 +67,7 @@ urlpatterns = [
     path('staff_profile', staffView.staff_profile, name='staff_profile'),
     path('staff_profile_save', staffView.staff_profile_save, name='staff_profile_save'),
     path('new_appointments', staffView.newAppointments, name="new_appointments"),
+    path('view_shedule', staffView.view_shedule, name="view_shedule"),
     
     # students roles
     path('view_lectures', studentView.view_lectures, name='view_lectures'),

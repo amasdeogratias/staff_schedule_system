@@ -59,8 +59,6 @@ def add_slots_save(request):
                     messages.error(request, 'This timeslot is already taken for the selected date.')
                     return HttpResponseRedirect(reverse('create_schedule'))
                 else:
-            
-
                     try:
                         staff = CustomUser.objects.get(id=request.user.id)
                         if education_level == "undergraduate":
@@ -157,3 +155,11 @@ def send_appointment_rejected_email(student_email, appointment_details):
     from_email = EMAIL_HOST_USER 
     recipient_list = [student_email]
     send_mail(subject, message, from_email, recipient_list)
+    
+
+def view_shedule(request):
+    time_slots = TimeSlot.objects.all()
+    context = {
+        "time_slots":time_slots
+    }
+    return render(request, 'main_app/staffs/view_schedule.html', context)
