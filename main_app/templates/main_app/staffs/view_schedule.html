@@ -34,9 +34,9 @@ My Shedules details
                     <td>{{slot.education_level}}</td>                  
                     <td>
                         {% if slot.status == 1  %}
-                            <span class="label label-info label-sm">Booked</i></span>
+                            <span class="badge bg-success"><i class="fa fa-check"></i> Booked</span>
                         {% else %}
-                            <a href="" class="btn btn-warning btn-sm">Not booked</i></a>
+                            <span class="badge bg-warning">Not booked</span>
                         {% endif %}   
                      
                     </td>

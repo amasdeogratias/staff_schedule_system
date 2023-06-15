@@ -158,7 +158,7 @@ def send_appointment_rejected_email(student_email, appointment_details):
     
 
 def view_shedule(request):
-    time_slots = TimeSlot.objects.all()
+    time_slots = TimeSlot.objects.filter(staff=request.user.id).order_by('-created_at')
     context = {
         "time_slots":time_slots
     }
