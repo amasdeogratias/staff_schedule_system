@@ -163,3 +163,8 @@ def view_shedule(request):
         "time_slots":time_slots
     }
     return render(request, 'main_app/staffs/view_schedule.html', context)
+
+def single_notification(request, notification_id):
+    notifys = NotificationStaff.objects.filter(id=notification_id)
+    context = {'notifys':notifys}
+    return render(request, 'main_app/staffs/single_staff_notification.html', context)
