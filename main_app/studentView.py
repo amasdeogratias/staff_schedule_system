@@ -99,7 +99,7 @@ def add_booking_save(request):
             time_slot_status = TimeSlot.objects.get(slot_date=appointment_date,time=appointment_time)
             time_slot_status.status = 1
             time_slot_status.save()
-            NotificationStaff.objects.create(message="There is new Appointment", staff=lecture_id, is_read=False)
+            NotificationStaff.objects.create(message=f"There is new Appointment from {student_obj.first_name + ' ' + student_obj.last_name}", staff=lecture_id, is_read=False)
             send_appointment_booked_email(staff_email, appointment_details)
             messages.success(request,"appointment created successfully")
             return HttpResponseRedirect(reverse("add_appointment", kwargs={"staff_id":staff_id}))

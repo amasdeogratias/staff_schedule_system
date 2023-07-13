@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_app',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,8 @@ WSGI_APPLICATION = 'schoo_demo.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'staff_schedule_system',
         'USER':'root',  
@@ -152,3 +155,8 @@ DEFAULT_FROM_EMAIL='cms udsm'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GRAPH_MODELS ={
+'all_applications': True,
+'graph_models': True,
+}
