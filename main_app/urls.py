@@ -69,6 +69,7 @@ urlpatterns = [
     path('new_appointments', staffView.newAppointments, name="new_appointments"),
     path('view_shedule', staffView.view_shedule, name="view_shedule"),
     path('view_notification/<str:notification_id>', staffView.single_notification, name='view_notification'),
+    path('generate_pdf', staffView.pdf_appointments, name='generate_pdf'),
     
     # students roles
     path('view_lectures', studentView.view_lectures, name='view_lectures'),

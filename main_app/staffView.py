@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 from .forms import AddTimeSlot
 from .models import TimeSlot, CustomUser, Appointment, Staffs,NotificationStudent,NotificationStaff
 from django.contrib import messages
@@ -9,7 +9,8 @@ from django.core.mail import send_mail
 from schoo_demo.settings import EMAIL_HOST_USER
 from PIL import Image
 from datetime import datetime,date
-
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 
@@ -168,3 +169,21 @@ def single_notification(request, notification_id):
     notifys = NotificationStaff.objects.filter(id=notification_id)
     context = {'notifys':notifys}
     return render(request, 'main_app/staffs/single_staff_notification.html', context)
+
+def pdf_appointments(request):
+    staff = CustomUser.objects.get(id = request.user.id)
+    appointments = Appointment.objects.filter(staffId = request.user.id)
+    template_path = 'main_app/staffs/pdf_appointments.html'
+    context = {"appointments":appointments, 'staff':staff}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="appointments_report.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+    
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
