@@ -176,7 +176,7 @@ def pdf_appointments(request):
     template_path = 'main_app/staffs/pdf_appointments.html'
     context = {"appointments":appointments, 'staff':staff}
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="appointments_report.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="appointments_report.pdf"'
     template = get_template(template_path)
     html = template.render(context)
     
