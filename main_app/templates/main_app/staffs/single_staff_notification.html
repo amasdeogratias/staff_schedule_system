@@ -1,0 +1,47 @@
+{% extends 'main_app/staffs/base.html' %}
+{% block page_title %}
+Student Notifications
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Notification details</h3>
+            </div><br>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+              <table class="table table-bordered table-hover" id="example2">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Notification Time</th>
+                    <th>Notification Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for notify in notifys %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{notify.created_at}} </td>
+                    <td>{{notify.message}}</td>                  
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</section>
+{% endblock main_content %}
