@@ -11,7 +11,7 @@
         <div class="dropdown-divider"></div>
         {% for notification in notifications %}
         <a href="/view_notification/{{notification.id}}" class="dropdown-item">
-        <i class="fas fa-check mr-2"></i> {{notification.message}}
+        <i class="fas fa-check mr-2"></i> {{ elpsis_message }}
           <span class="float-right text-muted text-sm">{{notification.created_at}}</span>
           {% endfor %}
         </a>

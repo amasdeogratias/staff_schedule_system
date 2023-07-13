@@ -23,7 +23,11 @@ def staff_panel(request):
     newAppointments = Appointment.objects.filter(status=0).count()
      # count unread notifications
     count_notifications = NotificationStaff.objects.filter(staff=request.user.id,is_read=False).count() #
-    notifications = NotificationStaff.objects.filter(staff=request.user.id).order_by('-created_at')
+    notifications = NotificationStaff.objects.filter(staff=request.user.id,is_read=False).order_by('-created_at')
+    
+    elpsis_message = ''
+    for notify in notifications:
+        elpsis_message = notify.message[:5] + '...' if len(notify.message) > 5 else notify.message
     notifications.update(is_read=True)
     context = {
             'appointmentcount':appointmentcount,
@@ -31,6 +35,7 @@ def staff_panel(request):
             'newAppointments':newAppointments,
             'count_notifications':count_notifications,
             'notifications':notifications,
+            'elpsis_message':elpsis_message,
             }
     return render(request,"main_app/staffs/staff_panel.html", context)
 
